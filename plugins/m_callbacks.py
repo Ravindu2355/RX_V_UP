@@ -1,4 +1,5 @@
-from pyrogram import Client, filters, types
+from pyrogram import Client as app
+from pyrogram import filters, types
 from Func.reply_text import Text
 
 @app.on_callback_query(filters.callback_data("delm"))
