@@ -24,3 +24,5 @@ def get_file_name_from_response(response):
     
     # Fallback to extracting the file name from the URL
     return f"video_{str(time.time())}.mp4"
+
+video_ext = ["mp4", "mkv", "avi", "mov", "flv", "wmv", "webm", "mpeg", "mpg", "3gp", "ts", "vob", "ogv", "ogx", "m4v", "f4v", "rm", "rmvb", "asf", "divx", "xvid", "svq3", "qt", "amv", "gifv"]
