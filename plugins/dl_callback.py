@@ -10,27 +10,29 @@ from config import Config
 #request for uplaod types.....
 @app.on_callback_query(filters.regex("^RVX_uper$"))
 async def _call_rvx(client,callback_query):
+  message=callback_query.message
   if callback_query.message.reply_to_message:
      nkey=make_keyboard(
        [[
          {"text":"Video🎞","callback_data":"rvx_video"},{"text":"File📦","callback_data":"rvx_file"}
        ]]
      )
-     reply_message_id = message.edit_text("🔰**RVX**🔰\n\nSelect the format of file you want uplaod to telegram",reply_markup=nkey)
+     await message.edit_text("🔰**RVX**🔰\n\nSelect the format of file you want uplaod to telegram",reply_markup=nkey)
   else:
-     message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
+     await message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
 
 @app.on_callback_query(filters.regex("^ytdlp_uper$"))
 async def _call_ytdlp(client,callback_query):
+  message=callback_query.message
   if callback_query.message.reply_to_message:
      nkey=make_keyboard(
        [[
          {"text":"Video🎞","callback_data":"ytd_video"},{"text":"File📦","callback_data":"ytd_file"}
        ]]
      )
-     reply_message_id = message.edit_text("🔰**YTDLP**🔰\n\nSelect the format of file you want uplaod to telegram",reply_markup=nkey)
+     await message.edit_text("🔰**YTDLP**🔰\n\nSelect the format of file you want uplaod to telegram",reply_markup=nkey)
   else:
-     message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
+     await message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
 
 
 #call del with uplaod types....
