@@ -33,7 +33,6 @@ app = Client(name="RVX_bot", bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, a
 
 @flask_app.route('/makefree')
 async def pr_free():
-    global progress_s
     if globals.progress_s != "free" and "error" in globals.progress_s and globals.run == 0:
         globals.progress_s = "free"
         return jsonify({"s":1,"message":"success!"})
@@ -50,7 +49,7 @@ def run_upload_t(chat_id, video_url,n_caption):
 
 @flask_app.route('/upload', methods=['GET'])
 def upload_video():
-    global globals.run,globals.progress_s
+    #global globals.run,globals.progress_s
     chat_id = int(request.args.get('chatid'))
     video_url = request.args.get('url')
     n_caption = request.args.get('cap')
