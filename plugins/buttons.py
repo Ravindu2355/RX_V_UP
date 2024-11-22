@@ -14,7 +14,8 @@ def make_keyboard(X):
 on_url_buttons = make_keyboard(
   [
     [{"text":"RVX Uploader","callback_data":"RVX_uper"}],
-    [{"text":"Yt-dlp","callback_data":"ytdlp_uper"}]
+    [{"text":"Yt-dlp","callback_data":"ytdlp_uper"}],
+    [{"text":"RVX-Extr","callback_data":"RVX_Ex"}]
   ]
 )
 on_url_bt_text = "\n\n🔰**RVX Uploader**:for upload only direct links\n🔰**Yt-dlp**: For eny upload but slow and some time giving errors"
