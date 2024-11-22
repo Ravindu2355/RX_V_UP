@@ -109,7 +109,7 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
           await reply_msg.edit_text(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
           globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
-        fid = ""
+        fid = None
         if s_type == "video":
             s_v = await app.send_video(
                chat_id = int(chat_id),
@@ -119,11 +119,7 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
                thumb=thumb_path,
                supports_streaming=True,  # Ensure the video is streamable
                progress=progress_for_pyrogram,
-               progress_args=(
-                 "uploading!",
-                 reply_msg,
-                 start_time
-               )
+               progress_args=("uploading!",reply_msg,start_time)
              )
             fid=s_v.video.file_id
         else:
@@ -141,7 +137,7 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
             fid=s_v.document.file_id
         if Config.M_CHAT:
           try:
-            if fid:
+            if fid not None:
                 if s_type == "video":
                     await app.send_video(
                      chat_id=int(Config.M_CHAT),
