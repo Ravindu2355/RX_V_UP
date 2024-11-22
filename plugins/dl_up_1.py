@@ -137,7 +137,7 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
             fid=s_v.document.file_id
         if Config.M_CHAT:
           try:
-            if fid not None:
+            if fid is not None:
                 if s_type == "video":
                     await app.send_video(
                      chat_id=int(Config.M_CHAT),
