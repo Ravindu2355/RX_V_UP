@@ -53,7 +53,7 @@ async def _add_h(client,message:types.Message):
     if str(message.chat.id) in Config.AuthU:
         hs=message.text.split(" ")
         if hs[1] and "--" in hs[1]:
-            ks=hs.split("--")
+            ks=hs.split("--")[1]
             k=ks[0]
             v=ks[1]
             add_header(k,v)
