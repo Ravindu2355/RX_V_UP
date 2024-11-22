@@ -4,7 +4,7 @@ from pyrogram import filters, types
 from config import Config
 from Func.reply_text import Text
 import psutil
-
+from Func.headers import get_headers, add_header, reset_headers, 
 
 @app.on_message(filters.private & filters.command("start"))
 async def _start(client,message:types.Message):
@@ -46,3 +46,29 @@ async def c_disc(client,message:types.Message):
         f"Used: {used_space:.2f} GB\n"
         f"Free: {free_space:.2f} GB"
       )
+
+#header control......
+@app.on_message(filters.private & filters.command("add_h"))
+async def _add_h(client,message:types.Message):
+    if str(message.chat.id) in Config.AuthU:
+        hs=message.text.split(" ")
+        if hs[1] and "--" in hs[1]:
+            ks=hs.split("--")
+            k=ks[0]
+            v=ks[1]
+            add_header(k,v)
+            await message.reply(f"header setteded!\nkey:{k} value:{v}")
+        else:
+            await message.reply("No header string! use /add_h key--value")
+    else:
+        await message.reply("You are not my auther!🫠")
+
+
+@app.on_message(filters.private & filters.command("del_h"))
+async def _del_h(client,message:types.Message):
+    if str(message.chat.id) in Config.AuthU:
+        reset_headers()
+        await message.reply("headers reseted!")
+    else:
+        await message.reply("You are not my auther!🫠")
+    
