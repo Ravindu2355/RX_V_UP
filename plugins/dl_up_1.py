@@ -6,6 +6,7 @@ from moviepy.editor import VideoFileClip
 from PIL import Image
 from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from Func.cookie import r_cookies, w_cookies, clear_cookies
+from Func.headers import get_headers
 from Func.simple_func import delete_file, get_file_name_from_response
 import globals
 from config import Config
@@ -26,6 +27,7 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
         await reply_msg.edit_text("Starting download...")
         globals.progress_s="Download starting...."
         cookies = r_cookies()
+        headers = get_headers()
         if not cookies:
             response = requests.get(url, cookies=cookies, stream=True)
         else:
