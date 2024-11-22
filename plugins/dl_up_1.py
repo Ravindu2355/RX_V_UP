@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip
 from PIL import Image
 from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from Func.cookie import r_cookies, w_cookies, clear_cookies
-from Func.simple_func import delete_file
+from Func.simple_func import delete_file, get_file_name_from_response
 import globals
 from config import Config
 
