@@ -8,7 +8,7 @@ import json
 from config import Config
 
 #request for uplaod types.....
-@app.on_callback_query(filters.callback_data("RVX_uper"))
+@app.on_callback_query(filters.regex("^RVX_uper$"))
 async def _call_rvx(client,callback_query):
   if callback_query.message.reply_to_message:
      nkey=make_keyboard(
@@ -20,7 +20,7 @@ async def _call_rvx(client,callback_query):
   else:
      message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
 
-@app.on_callback_query(filters.callback_data("ytdlp_uper"))
+@app.on_callback_query(filters.regex("^ytdlp_uper$"))
 async def _call_ytdlp(client,callback_query):
   if callback_query.message.reply_to_message:
      nkey=make_keyboard(
