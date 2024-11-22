@@ -68,6 +68,20 @@ def upload_video():
     except Exception as e:
         return jsonify({"s":0,"message": f"Err on run: {e}","resd":f"chat_id: {chat_id} & url: {video_url}"})
 
+def process_tasks():
+    """Monitors the tasks dictionary and processes tasks when available."""
+    while True:
+        if globals.tasks:  # Check if the tasks dictionary is not empty
+            for chat_id, urls in list(globals.tasks.items()):
+                if globals.tasks[chat_id]:
+                   url= globals.tasks[chat_id].pop()
+                   upload_thread = Thread(target=run_upload_t, args=(chat_id, url,None))
+                   upload_thread.start()
+                else:
+                   del tasks[chat_id]  # Remove the task for the chat_id after processing
+                   print(f"Completed tasks for chat_id {chat_id}")
+        else:
+            time.sleep(2)  # Wait if no tasks are available
 
 
 
@@ -76,6 +90,8 @@ def run_flask():
 
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
+threading.Thread(target=process_tasks, daemon=True).start()
+
 
 if __name__ == "__main__" :
     app.run()
