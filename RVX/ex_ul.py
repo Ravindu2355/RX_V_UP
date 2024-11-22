@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from bunkr import ex_bunkr
 from config import Config
 
-async def ex_url(app,msg,url,chat_id=):
+async def ex_url(app,msg,url,chat_id=Config.M_CHAT):
   ux=urlparse(url)
   nl=u.netloc
   if "bunkr" in nl:
