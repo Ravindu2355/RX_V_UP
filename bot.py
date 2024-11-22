@@ -1,10 +1,20 @@
 import os
-import logging
 from config import Config
 from pyrogram import Client
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from threading import Thread
+from plugins.dl_up_1 import upload_from_url
+import globals
+
+API_ID = Config.API_ID
+API_HASH = Config.API_HASH
+BOT_TOKEN = Config.BOT_TOKEN
+M_CHAT = int(Config.M_CHAT)
+AUTH_U = Config.AuthU
+
+if not all([API_ID, API_HASH, BOT_TOKEN,M_CHAT,AUTH_U]):
+    raise ValueError("API_ID, API_HASH, M_CHAT and BOT_TOKEN environment variables must be set.")
 
 flask_app = Flask(__name__)
 CORS(flask_app)
@@ -18,6 +28,46 @@ if not os.path.isdir(Config.download_dir):
     os.makedirs(Config.download_dir)
 plugins = dict(root="plugins")
 app = Client(name="RVX_bot", bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, api_hash=Config.API_HASH, plugins=plugins)
+
+
+
+@flask_app.route('/makefree')
+async def pr_free():
+    global progress_s
+    if globals.progress_s != "free" and "error" in globals.progress_s:
+        globals.progress_s = "free"
+        return jsonify({"s":1,"message":"success!"})
+    else:
+        return jsonify({"s":0,"message": "Not Errored!"})
+        
+
+@flask_app.route('/progress')
+def s_pro():
+    return jsonify({"s":1,"progress": globales.progress_s,"message":"success!"})
+
+def run_upload_t(chat_id, video_url,n_caption):
+    asyncio.run(upload_from_url(app, chat_id=chat_id, url=video_url, n_caption=n_caption))
+
+@flask_app.route('/upload', methods=['GET'])
+def upload_video():
+    chat_id = int(request.args.get('chatid'))
+    video_url = request.args.get('url')
+    n_caption = request.args.get('cap')
+    if not chat_id or not video_url:
+        return jsonify({"s":0,"message": "No parameter found!"})
+    if not n_caption:
+        n_caption = None
+    if globals.progress_s != "free":
+        return jsonify({"s":0,"message": "Sorry bot is busy right now try again later!"})
+    try:
+        upload_thread = Thread(target=run_upload_t, args=(chat_id, video_url, n_caption))
+        upload_thread.start()
+        return jsonify({"s":1,"message": "Video add to Uploading!","resd":f"chat_id: {chat_id} & url: {video_url}"})
+    except Exception as e:
+        return jsonify({"s":0,"message": f"Err on run: {e}","resd":f"chat_id: {chat_id} & url: {video_url}"})
+
+
+
 
 def run_flask():
     flask_app.run(host='0.0.0.0', port=5000)
