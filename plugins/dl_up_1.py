@@ -10,7 +10,9 @@ from Func.simple_func import delete_file, get_file_name_from_response
 import globals
 from config import Config
 
-async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_caption=None):
+sizelimit = Config.TG_MAX_FILE_SIZE
+
+async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_caption=None, s_type="video"):
     #global globals.progress_s,globals.run
     reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
     globals.progress_s="Processing...!"
@@ -104,7 +106,7 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
               frame = video.get_frame(3.0)
               img = Image.fromarray(frame)
               img.save(thumb_path, "JPEG")
-          await reply_msg.edit(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
+          await reply_msg.edit_text(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
           globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
         s_v = await app.send_video(
