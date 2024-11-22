@@ -9,7 +9,7 @@ from Func.simple_func import delete_file
 import globals
 from config import Config
 
-async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None):
+async def upload_from_url(client: Client, chat_id:str, url: str, n_name=None, n_caption=None):
     global progress_s
     reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
     globals.progress_s="Processing...!"
@@ -42,6 +42,20 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
             f_ext = fl_list.pop()
             filename_s = ".".join(fl_list)
         m_caption = f'Uploaded: {filename_s}\n file-extention: {f_ext}'
+        if n_name:
+            try:
+              n_ext=n_name.split(".").pop()
+              if n_ext:
+                 f_ext=n_ext
+              else:
+                 await reply_msg.edit_text("You did'nt provide a file extention in new filename so i used my defalt as `.mp4`")
+                 f_ext="mp4"
+                 n_name=n_name+".mp4"
+            except:
+                await reply_msg.edit_text("You did'nt provide the name correctly for rename so not renamed🙂\n\n use /help for know about it...")
+                pass
+            filename=n_name
+            m_caption=f'Uploaded {filename_s} and renamed to {n_name}\n file-extention: {f_ext}'
         if n_caption is not None:
             m_caption = n_caption
         downloaded_size = 0
