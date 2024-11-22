@@ -6,6 +6,8 @@ from plugins.dl_up_1 import upload_from_url
 import asyncio, os, time, requests, math, psutil
 import json
 from config import Config
+from RVX.ex_ul import ex_url
+
 
 #request for uplaod types.....
 @app.on_callback_query(filters.regex("^RVX_uper$"))
@@ -20,6 +22,15 @@ async def _call_rvx(client,callback_query):
      await message.edit_text("🔰**RVX**🔰\n\nSelect the format of file you want uplaod to telegram",reply_markup=nkey)
   else:
      await message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
+
+@app.on_callback_query(filters.regex("^RVX_Ex$"))
+async def _call_rvx_ex(client,callback_query):
+  message=callback_query.message
+  if callback_query.message.reply_to_message:
+     await ex_url(app,message,msssage.text,chat_id=message.chat.id)
+  else:
+     await message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
+
 
 @app.on_callback_query(filters.regex("^ytdlp_uper$"))
 async def _call_ytdlp(client,callback_query):
