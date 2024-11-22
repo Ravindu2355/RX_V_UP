@@ -1,11 +1,11 @@
 #for direct link upload.....(uploader rvx direct)
 from pyrogram import Client, filters, types
-import asyncio, os, time, requests, math, psutil
+import asyncio, os, time, requests, math, psutil, json
 from moviepy.editor import VideoFileClip
-from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from PIL import Image
-import json
-from cookie import r_cookies, w_cookies, clear_cookies
+from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
+from Func.cookie import r_cookies, w_cookies, clear_cookies
+from Func.simple_func import delete_file
 import globals
 
 async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None):
