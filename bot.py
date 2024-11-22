@@ -78,4 +78,4 @@ flask_thread = Thread(target=run_flask)
 flask_thread.start()
 
 if __name__ == "__main__" :
-    bot.run()
+    app.run()
