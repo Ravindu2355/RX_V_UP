@@ -1,5 +1,6 @@
 #for direct link upload.....(uploader rvx direct)
-from pyrogram import Client, filters, types
+from pyrogram import Client as app
+from pyrogram import filters, types
 import asyncio, os, time, requests, math, psutil, json
 from moviepy.editor import VideoFileClip
 from PIL import Image
