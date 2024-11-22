@@ -1,4 +1,5 @@
-from pyrogram import Client, filters, types
+from pyrogram import Client as app
+from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from plugins.buttons import make_keyboard
 from plugins.dl_up_1 import upload_from_url
