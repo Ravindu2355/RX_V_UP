@@ -6,6 +6,7 @@ from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatt
 from PIL import Image
 import json
 from cookie import r_cookies, w_cookies, clear_cookies
+import globals
 
 async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None):
     global progress_s
