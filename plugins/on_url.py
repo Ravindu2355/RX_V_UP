@@ -1,4 +1,5 @@
-from pyrogram import Client, filters, types
+from pyrogram import Client as app
+from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from plugins.buttons import on_url_buttons, on_url_bt_text
 import asyncio, os, time, requests, math, psutil
