@@ -7,6 +7,7 @@ from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatt
 from Func.cookie import r_cookies, w_cookies, clear_cookies
 from Func.simple_func import delete_file
 import globals
+from config import Config
 
 async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None):
     global progress_s
@@ -78,15 +79,17 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
                            await reply_msg.edit_text(nn_s)
         await reply_msg.edit_text("Download complete. Generating thumbnail...")
         globals.progress_s="Download complete. Generating thumbnail..."
-        thumb_path=f'{filename_s}-thumb.jpg'
-        duration = 0
-        with VideoFileClip(filename) as video:
+        thumb_path = Config.DEF_THUMB_NAIL_VID_S
+        if thumb_path is None or thumb_path == "":
+          thumb_path=f'{filename_s}-thumb.jpg'
+          duration = 0
+          with VideoFileClip(filename) as video:
               duration = int(video.duration)
               frame = video.get_frame(3.0)
               img = Image.fromarray(frame)
               img.save(thumb_path, "JPEG")
-        await reply_msg.edit(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
-        globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
+          await reply_msg.edit(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
+          globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
         s_v = await app.send_video(
                chat_id = int(chat_id),
@@ -97,20 +100,21 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
                supports_streaming=True,  # Ensure the video is streamable
                progress=progress_for_pyrogram,
                progress_args=(
-                "uploading!",
+                 "uploading!",
                  reply_msg,
                  start_time
-              )
+               )
              )
         fid=s_v.video.file_id
-        try:
-          await app.send_video(
-            chat_id=int(M_CHAT),
-            video=fid,
-            caption=f"**Uploaded via RvXBot**"
-          )
-        except Exception as e:
-            pass
+        if Config.M_CHAT:
+          try:
+            await app.send_video(
+              chat_id=int(M_CHAT),
+              video=fid,
+              caption=f"**Uploaded via RvXBot**"
+            )
+          except Exception as e:
+              pass
         # Clean up the local files after uploading 
         delete_file(filename)
         delete_file(thumb_path)
