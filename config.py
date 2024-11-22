@@ -29,5 +29,7 @@ class Config(object):
     AuthUs = os.environ.get("auth","")
     
     AuthU= f"{OWNER_ID},{AuthUs}"
+
+    M_CHAT = os.environ.get("mchat","")
     
     BOT_USERNAME = os.environ.get("bot_un", "")
