@@ -109,7 +109,9 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
           await reply_msg.edit_text(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
           globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
-        s_v = await app.send_video(
+        fid = ""
+        if s_type == "video":
+            s_v = await app.send_video(
                chat_id = int(chat_id),
                video = filename,
                duration=duration,
@@ -123,14 +125,37 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
                  start_time
                )
              )
-        fid=s_v.video.file_id
+            fid=s_v.video.file_id
+        else:
+            s_v =  await app.send_document(
+               chat_id = int(chat_id),
+               document = filename,
+               caption=m_caption,
+               progress=progress_for_pyrogram,
+               progress_args=(
+                 "🔰**Uploading!...**🔰\n\n",
+                 reply_msg,
+                 start_time
+               )
+            )
+            fid=s_v.document.file_id
         if Config.M_CHAT:
           try:
-            await app.send_video(
-              chat_id=int(Config.M_CHAT),
-              video=fid,
-              caption=f"**Uploaded via RvXBot**"
-            )
+            if fid:
+                if s_type == "video":
+                    await app.send_video(
+                     chat_id=int(Config.M_CHAT),
+                     video=fid,
+                     caption=f"**Uploaded via RvXBot**"
+                   )
+                else:
+                   await app.send_video(
+                     chat_id=int(Config.M_CHAT),
+                     document=fid,
+                     caption=f"**Uploaded via RvXBot**"
+                   )
+            else:
+                print("cannot find fid")
           except Exception as e:
               pass
         # Clean up the local files after uploading 
