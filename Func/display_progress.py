@@ -3,17 +3,17 @@
 # Ask Doubt on telegram @KingVJ01
 
 # the logging things
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+#import logging
+#logging.basicConfig(level=logging.DEBUG,
+                    #format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+#logger = logging.getLogger(__name__)
 
 import math, os, time, shutil
 
 
-from config import Config
+#from config import Config
 # the Strings used for this "thing"
-from translation import Translation
+#from translation import Translation
 
 
 async def progress_for_pyrogram(
@@ -37,8 +37,8 @@ async def progress_for_pyrogram(
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
 
         progress = "[{0}{1}] \nP: {2}%\n".format(
-            ''.join(["█" for i in range(math.floor(percentage / 5))]),
-            ''.join(["░" for i in range(20 - math.floor(percentage / 5))]),
+            ''.join(["✅️" for i in range(math.floor(percentage / 5))]),
+            ''.join(["❌️" for i in range(20 - math.floor(percentage / 5))]),
             round(percentage, 2))
 
         tmp = progress + "{0} of {1}\nSpeed: {2}/s\nETA: {3}\n".format(
@@ -84,4 +84,3 @@ def TimeFormatter(milliseconds: int) -> str:
         ((str(seconds) + "s, ") if seconds else "") + \
         ((str(milliseconds) + "ms, ") if milliseconds else "")
     return tmp[:-2]
-
