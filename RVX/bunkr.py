@@ -1,5 +1,3 @@
-import os
-import requests
 from bs4 import BeautifulSoup
 from config import Config
 from plugins.dl_up_1 import upload_from_url
