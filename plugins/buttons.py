@@ -18,3 +18,12 @@ on_url_buttons = make_keyboard(
   ]
 )
 on_url_bt_text = "\n\n🔰**RVX Uploader**:for upload only direct links\n🔰**Yt-dlp**: For eny upload but slow and some time giving errors"
+
+v_or_f = make_keyboard(
+    [
+        [
+            {"text":"Video","callback_data":"as_video"},
+            {"text":"File","callback_data":"as_file"}
+        ]
+    ]
+)
