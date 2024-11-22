@@ -16,6 +16,7 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
         if len(url) < 2:
             await reply_msg.edit_text("Please provide a URL!")
             globals.progress_s="free"
+            globals.run = 0
             return
         await reply_msg.edit_text("Starting download...")
         globals.progress_s="Download starting...."
@@ -28,6 +29,7 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
         if total_size >= sizelimit:
             await reply_msg.edit_text("That file was bigger than telegram size limitations for me🥲")
             globals.progress_s = "File was bigger than 2GB"
+            globals.run = 0
             return
         filename = url.split("/")[-1]  # Extract the filename from the URL
         if '?' in filename:
@@ -112,11 +114,14 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
         # Clean up the local files after uploading 
         delete_file(filename)
         delete_file(thumb_path)
-        globals.progress_s="free"
+        globals.progress_s = "free"
+        globals.run = 0
         await reply_msg.delete()
 
     except Exception as e:
-        # Handle any errors and notify the user
         await reply_msg.edit_text(f"An error occurred: {str(e)}\n\n**From RVX Uper1 system**")
-        progress_s=f"An error occurred: {str(e)}"
+        globals.progress_s=f"An error occurred: {str(e)} uper1"
         print(e)
+        globals.run = 0
+        delete_file(filename) #deleteing files if they downloaded...
+        delete_file(thumb_path)
