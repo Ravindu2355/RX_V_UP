@@ -1,4 +1,4 @@
-#replying commands
+import os,time
 from pyrogram import Client, filters, types
 from confing import AuthU
 from Func.reply_text import Text
