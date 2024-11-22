@@ -90,7 +90,7 @@ def run_flask():
 
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
-threading.Thread(target=process_tasks, daemon=True).start()
+Thread(target=process_tasks, daemon=True).start()
 
 
 if __name__ == "__main__" :
