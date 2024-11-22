@@ -6,7 +6,7 @@ import globals
 from pyrogram import Client, filters, types
 import asyncio, os, time, math, psutil
 import json
-
+from Func.headers import add_header,reset_headers
 
 dl_h = {
   "Referer": "https://bunkr.ph/"
@@ -50,7 +50,9 @@ def get_bunkrr_media_links(page_url):
 async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
   if "/v/" in url:
     vd=bunkr_ex_v(url);
+    add_header("Referer","https://bunkr.ph/")
     await upload_from_url(app, chat_id, video)
+    reset_headers()
   else:
     bls = get_bunkrr_media_links(url)
     link_l =len(bls)
