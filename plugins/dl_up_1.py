@@ -11,14 +11,14 @@ import globals
 async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None):
     global progress_s
     reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
-    progress_s="Processing...!"
+    globals.progress_s="Processing...!"
     try:
         if len(url) < 2:
             await reply_msg.edit_text("Please provide a URL!")
-            progress_s="free"
+            globals.progress_s="free"
             return
         await reply_msg.edit_text("Starting download...")
-        progress_s="Download starting...."
+        globals.progress_s="Download starting...."
         cookies = r_cookies()
         if not cookies:
             response = requests.get(url, cookies=cookies, stream=True)
@@ -27,6 +27,7 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
         total_size = int(response.headers.get('content-length', 0))  # Get the total file size
         if total_size >= sizelimit:
             await reply_msg.edit_text("That file was bigger than telegram size limitations for me🥲")
+            globals.progress_s = "File was bigger than 2GB"
             return
         filename = url.split("/")[-1]  # Extract the filename from the URL
         if '?' in filename:
@@ -51,7 +52,7 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
                     percent = (downloaded_size / total_size) * 100
                     now_t=time.time()
                     diffr=now_t-start_t
-                    progress_s=f"Downloading... {percent}% of {humanbytes(total_size)}"
+                    globals.progress_s=f"Downloading... {percent}% of {humanbytes(total_size)}"
                     #if total_size > 0 and percent // 10 > tr_s:
                     if round(diffr % 10.00) == 0 or downloaded_size == total_size:
                        speed = downloaded_size / diffr
@@ -74,8 +75,8 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
                            tr_s = nn_s
                            await reply_msg.edit_text(nn_s)
         await reply_msg.edit_text("Download complete. Generating thumbnail...")
-        progress_s="Download complete. Generating thumbnail..."
-        thumb_path='thumb.jpg'
+        globals.progress_s="Download complete. Generating thumbnail..."
+        thumb_path=f'{filename_s}-thumb.jpg'
         duration = 0
         with VideoFileClip(filename) as video:
               duration = int(video.duration)
@@ -83,7 +84,7 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
               img = Image.fromarray(frame)
               img.save(thumb_path, "JPEG")
         await reply_msg.edit(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
-        progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
+        globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
         s_v = await app.send_video(
                chat_id = int(chat_id),
@@ -109,14 +110,13 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
         except Exception as e:
             pass
         # Clean up the local files after uploading 
-        os.remove(filename)
-        if thumb_path and os.path.exists(thumb_path):
-            os.remove(thumb_path)
-        progress_s="free"
+        delete_file(filename)
+        delete_file(thumb_path)
+        globals.progress_s="free"
         await reply_msg.delete()
 
     except Exception as e:
         # Handle any errors and notify the user
-        await reply_msg.edit_text(f"An error occurred: {str(e)}")
+        await reply_msg.edit_text(f"An error occurred: {str(e)}\n\n**From RVX Uper1 system**")
         progress_s=f"An error occurred: {str(e)}"
         print(e)
