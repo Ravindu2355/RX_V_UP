@@ -20,7 +20,7 @@ async def _home(client,callback_query):
           st=st.replce("R-user",nun)
         st=st.replce("user_id",message.chat.id)
         reply_msg = await message.edit_text(st)
-    else:
+  else:
         await message.delete();
 
 @app.on_callback_query(filters.regex("^help$"))
