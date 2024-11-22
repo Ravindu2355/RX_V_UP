@@ -1,7 +1,7 @@
 from pyrogram import Client, filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from plugins.buttons import make_keyboard
-import plugins.dl_up_1 import upload_from_url
+from plugins.dl_up_1 import upload_from_url
 import asyncio, os, time, requests, math, psutil
 import json
 from config import Config
