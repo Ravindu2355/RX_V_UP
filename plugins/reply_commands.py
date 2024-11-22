@@ -1,14 +1,14 @@
 import os,time
 from pyrogram import Client as app
 from pyrogram import filters, types
-from confing import AuthU
+from confing import Config
 from Func.reply_text import Text
 import psutil
 
 
 @app.on_message(filters.private & filters.command("start"))
 async def _start(client,message:types.Message):
-    if str(message.chat.id) in AuthU:
+    if str(message.chat.id) in Config.AuthU:
         un=message.chat.username
         st=Text.start
         if un:
