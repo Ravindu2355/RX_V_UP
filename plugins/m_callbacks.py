@@ -17,8 +17,8 @@ async def _home(client,callback_query):
         else:
             nun=message.chat.first_name
         if nun:
-          st=st.replce("R-user",nun)
-        st=st.replce("user_id",message.chat.id)
+          st=st.replace("R-user",nun)
+        st=st.replace("user_id",message.chat.id)
         reply_msg = await message.edit_text(st)
   else:
         await message.delete();
