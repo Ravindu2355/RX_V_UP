@@ -1,5 +1,6 @@
 import os,time
-from pyrogram import Client, filters, types
+from pyrogram import Client as app
+from pyrogram import filters, types
 from confing import AuthU
 from Func.reply_text import Text
 import psutil
