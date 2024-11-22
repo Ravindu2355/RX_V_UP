@@ -1,20 +1,4 @@
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
-# the logging things
-#import logging
-#logging.basicConfig(level=logging.DEBUG,
-                    #format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-#logger = logging.getLogger(__name__)
-
 import math, os, time, shutil
-
-
-#from config import Config
-# the Strings used for this "thing"
-#from translation import Translation
-
 
 async def progress_for_pyrogram(
     current,
