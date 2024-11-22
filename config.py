@@ -8,7 +8,7 @@ class Config(object):
     
     API_HASH = os.environ.get("API_HASH", "")
     
-    DOWNLOAD_LOCATION = "./DOWNLOADS"
+    dl_dir = "./DOWNLOADS"
     
     MAX_FILE_SIZE = 2097152000
     
@@ -16,14 +16,18 @@ class Config(object):
     
     FREE_USER_MAX_FILE_SIZE = 2097152000
     
-    CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", 128))
+    CHUNK_SIZE = int(os.environ.get("chunk", 128))
     
-    DEF_THUMB_NAIL_VID_S = os.environ.get("DEF_THUMB_NAIL_VID_S", "")
+    DEF_THUMB_NAIL_VID_S = os.environ.get("def_thumb", "")
     
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", ""))
+    LOG_CHANNEL = int(os.environ.get("log_c", ""))
 
-    UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "")
+    UPDATES_CHANNEL = os.environ.get("update_c", "")
     
-    OWNER_ID = int(os.environ.get("OWNER_ID", ""))
+    OWNER_ID = int(os.environ.get("owner", ""))
+
+    AuthUs = os.environ.get("auth","")
+    
+    AuthU= f"{OWNER_ID},{AuthUs}"
     
     BOT_USERNAME = os.environ.get("BOT_USERNAME", "")
