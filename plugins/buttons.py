@@ -1,4 +1,4 @@
-from pyrogram import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def make_keyboard(X):
     keyboard = [
