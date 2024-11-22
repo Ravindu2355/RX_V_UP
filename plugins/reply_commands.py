@@ -22,7 +22,7 @@ async def _start(client,message:types.Message):
     else:
         await message.delete();
         
-@app.on_message(filters.private && filters.command("help"))
+@app.on_message(filters.private & filters.command("help"))
 async def _help(client,message:types.Message):
     await app.send_message(Text.help)
     
