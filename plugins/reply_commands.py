@@ -71,4 +71,13 @@ async def _del_h(client,message:types.Message):
         await message.reply("headers reseted!")
     else:
         await message.reply("You are not my auther!🫠")
+
+
+@app.on_message(filters.private & filters.command("get_h"))
+async def _get_h(client,message:types.Message):
+    if str(message.chat.id) in Config.AuthU:
+        hh=get_headers()
+        await message.reply(f"This is my defalt headers:\n{json.dumps(hh)}")
+    else:
+        await message.reply("You are not my auther!🫠")
     
