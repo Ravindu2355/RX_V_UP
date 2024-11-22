@@ -4,7 +4,7 @@ from pyrogram import filters, types
 from config import Config
 from Func.reply_text import Text
 import psutil
-from Func.headers import get_headers, add_header, reset_headers, 
+from Func.headers import get_headers, add_header, reset_headers
 
 @app.on_message(filters.private & filters.command("start"))
 async def _start(client,message:types.Message):
