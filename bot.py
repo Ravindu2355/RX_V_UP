@@ -34,7 +34,7 @@ app = Client(name="RVX_bot", bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, a
 @flask_app.route('/makefree')
 async def pr_free():
     global progress_s
-    if globals.progress_s != "free" and "error" in globals.progress_s:
+    if globals.progress_s != "free" and "error" in globals.progress_s and globals.run == 0:
         globals.progress_s = "free"
         return jsonify({"s":1,"message":"success!"})
     else:
@@ -43,13 +43,14 @@ async def pr_free():
 
 @flask_app.route('/progress')
 def s_pro():
-    return jsonify({"s":1,"progress": globales.progress_s,"message":"success!"})
+    return jsonify({"s":1,"progress": globals.progress_s,"message":"success!"})
 
 def run_upload_t(chat_id, video_url,n_caption):
     asyncio.run(upload_from_url(app, chat_id=chat_id, url=video_url, n_caption=n_caption))
 
 @flask_app.route('/upload', methods=['GET'])
 def upload_video():
+    global globals.run,globals.progress_s
     chat_id = int(request.args.get('chatid'))
     video_url = request.args.get('url')
     n_caption = request.args.get('cap')
@@ -57,11 +58,12 @@ def upload_video():
         return jsonify({"s":0,"message": "No parameter found!"})
     if not n_caption:
         n_caption = None
-    if globals.progress_s != "free":
+    if globals.run != 0:
         return jsonify({"s":0,"message": "Sorry bot is busy right now try again later!"})
     try:
         upload_thread = Thread(target=run_upload_t, args=(chat_id, video_url, n_caption))
         upload_thread.start()
+        globals.run = 1
         return jsonify({"s":1,"message": "Video add to Uploading!","resd":f"chat_id: {chat_id} & url: {video_url}"})
     except Exception as e:
         return jsonify({"s":0,"message": f"Err on run: {e}","resd":f"chat_id: {chat_id} & url: {video_url}"})
