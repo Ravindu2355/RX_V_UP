@@ -3,7 +3,7 @@ from pyrogram import Client, filters, types
 import asyncio, os, time, math, psutil
 import json
 from urllib.parse import urlparse
-from bunkr import
+from bunkr import ex_bunkr
 from config import Config
 
 async def ex_url(app,msg,url,chat_id=):
