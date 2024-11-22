@@ -1,7 +1,7 @@
 import os,time
 from pyrogram import Client as app
 from pyrogram import filters, types
-from confing import Config
+from config import Config
 from Func.reply_text import Text
 import psutil
 
