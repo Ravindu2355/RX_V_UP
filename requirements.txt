@@ -11,3 +11,4 @@ proglog
 Pillow>=5.3.0
 flask_cors
 psutil
+beautifulsoup4
