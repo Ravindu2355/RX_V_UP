@@ -66,7 +66,7 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
       if round(diff % 10.00) == 0:
         await msg.edit_text(f"extracted {len(main_ls)} of {link_l}")
     globals.tasks[str(chat_id)]=main_ls
-    msg.edit_text(f"All Links Extracted ({link_l}) and they will be send soon🙂🙂🫡")
+    msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡")
 
 
 
