@@ -109,7 +109,7 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
         if Config.M_CHAT:
           try:
             await app.send_video(
-              chat_id=int(M_CHAT),
+              chat_id=int(Config.M_CHAT),
               video=fid,
               caption=f"**Uploaded via RvXBot**"
             )
