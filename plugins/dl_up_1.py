@@ -10,9 +10,10 @@ import globals
 from config import Config
 
 async def upload_from_url(client: Client, chat_id:str, url: str, n_name=None, n_caption=None):
-    global globals.progress_s
+    global globals.progress_s,globals.run
     reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
     globals.progress_s="Processing...!"
+    globals.run = 1
     try:
         if len(url) < 2:
             await reply_msg.edit_text("Please provide a URL!")
