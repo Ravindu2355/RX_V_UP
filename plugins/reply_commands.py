@@ -1,7 +1,30 @@
 #replying commands
 from pyrogram import Client, filters, types
+from confing import AuthU
+from Func.reply_text import Text
+import psutil
 
 
+@app.on_message(filters.private & filters.command("start"))
+async def _start(client,message:types.Message):
+    if str(message.chat.id) in AuthU:
+        un=message.chat.username
+        st=Text.start
+        if un:
+            nun=un
+        else:
+            nun=message.chat.first_name
+        if nun:
+          st=st.replce("R-user",nun)
+        st=st.replce("user_id",message.chat.id)
+        reply_msg = await message.reply(st)
+    else:
+        await message.delete();
+        
+@app.on_message(filters.private && filters.command("help"))
+async def _help(client,message:types.Message):
+    await app.send_message(Text.help)
+    
 @app.on_message(filters.private & filters.command("ping"))
 async def c_pin(client,message:types.Message):
     start_time = time.time()  # Record start time
