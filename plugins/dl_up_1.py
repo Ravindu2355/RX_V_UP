@@ -32,7 +32,11 @@ async def upload_from_url(client: Client, chat_id:str, url: str, n_caption=None)
             filename = filename.split("?")[0]
         if "." not in filename:
             filename = get_file_name_from_response(response)
-        m_caption = f'Uploaded: {filename}'
+        if "." in filename:
+            fl_list = filename.split(".")
+            f_ext = fl_list.pop()
+            filename_s = ".".join(fl_list)
+        m_caption = f'Uploaded: {filename_s}\n file-extention: {f_ext}'
         if n_caption is not None:
             m_caption = n_caption
         downloaded_size = 0
