@@ -17,7 +17,7 @@ async def _start(client,message:types.Message):
             nun=message.chat.first_name
         if nun:
           st=st.replace("R-user",nun)
-        st=st.replace("user_id",message.chat.id)
+        st=st.replace("user_id",str(message.chat.id))
         reply_msg = await message.reply(st)
     else:
         await message.delete();
