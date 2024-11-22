@@ -2,11 +2,11 @@ import os
 
 class Config(object):
     
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+    BOT_TOKEN = os.environ.get("tk", "")
     
-    API_ID = int(os.environ.get("API_ID", ""))
+    API_ID = int(os.environ.get("apiid", ""))
     
-    API_HASH = os.environ.get("API_HASH", "")
+    API_HASH = os.environ.get("apihash", "")
     
     dl_dir = "./DOWNLOADS"
     
@@ -30,4 +30,4 @@ class Config(object):
     
     AuthU= f"{OWNER_ID},{AuthUs}"
     
-    BOT_USERNAME = os.environ.get("BOT_USERNAME", "")
+    BOT_USERNAME = os.environ.get("bot_un", "")
