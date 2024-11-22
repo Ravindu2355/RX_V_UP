@@ -51,9 +51,11 @@ async def _from_rvx_dl(client,callback_query):
         variables = {}
         for var, value in zip(vars, Values):
           variables[var] = value
+        await msg.delete()
         await upload_from_url(client,chat_id,variables["url"],n_name=variables.get("ren",None),n_caption=variables.get("cap",None))
       else:
         url=msgt
+        await msg.delete()
         await upload_from_url(client,chat_id,url)
     else:
       await msg.edit_text("No url message🙃")
