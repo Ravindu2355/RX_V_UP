@@ -134,7 +134,12 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
                  start_time
                )
             )
-            fid=s_v.document.file_id
+            if s_v.document:
+                fid=s_v.document.file_id
+            if s_v.video:
+                fid=s_v.video.file_id
+            if s_v.audio:
+                fid=s_v.audio.file_id
         if Config.M_CHAT:
           try:
             if fid is not None:
