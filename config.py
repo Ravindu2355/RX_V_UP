@@ -8,7 +8,7 @@ class Config(object):
     
     API_HASH = os.environ.get("apihash", "")
     
-    dl_dir = "./DOWNLOADS"
+    download_dir = "./DOWNLOADS"
     
     MAX_FILE_SIZE = 2097152000
     
