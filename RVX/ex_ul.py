@@ -7,9 +7,7 @@ from RVX.bunkr import ex_bunkr
 from config import Config
 
 async def ex_url(app,msg,url,chat_id=Config.M_CHAT):
-  ux=urlparse(url)
-  nl=ux.netloc
-  if "bunkr" in nl:
+  if "bunkr" in url:
     await ex_bunkr(app,msg,url,chat_id=chat_id)
   else:
     await msg.edit_text("Sorry cannot parse that link!")
