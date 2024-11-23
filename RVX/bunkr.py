@@ -4,7 +4,7 @@ from plugins.dl_up_1 import upload_from_url
 from bot import app
 import globals
 from pyrogram import Client, filters, types
-import asyncio, os, time, math, psutil
+import asyncio, os, time, math, psutil, requests
 import json
 from Func.headers import add_header,reset_headers
 
