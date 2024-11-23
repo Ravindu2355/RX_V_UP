@@ -13,7 +13,7 @@ from config import Config
 
 sizelimit = Config.TG_MAX_FILE_SIZE
 
-async def upload_from_url(app:Client=Client, chat_id:str, url: str, n_name=None, n_caption=None, s_type="video",reply_msg=None):
+async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=None, s_type="video",reply_msg=None):
     #global globals.progress_s,globals.run
     # Check required arguments
     if reply_msg is None:
