@@ -27,7 +27,7 @@ async def _call_rvx(client,callback_query):
 async def _call_rvx_ex(client,callback_query):
   message=callback_query.message
   if callback_query.message.reply_to_message:
-     await ex_url(app,message,url=message.text,chat_id=message.chat.id)
+     await ex_url(app,message,url=message.reply_to_message.text,chat_id=message.chat.id)
   else:
      await message.edit_text("No Url Message You send to me if you deleted it try again (send url again)")
 
