@@ -5,6 +5,28 @@ from config import Config
 from Func.reply_text import Text
 import psutil
 from Func.headers import get_headers, add_header, reset_headers
+from plugins.dl_up_1 import upload_from_url
+import globals
+
+def run_upload_t(app, chat_id, video_url, n_caption):
+    asyncio.run(upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption))
+
+def process_tasks():
+    """Monitors the tasks dictionary and processes tasks when available."""
+    while True:
+        if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
+            for chat_id, urls in list(globals.tasks.items()):
+                if globals.tasks[chat_id]:  # Ensure the task list for chat_id is not empty
+                    globals.run = 1
+                    url = globals.tasks[chat_id].pop()  # Pop a URL from the task list
+                    upload_thread = Thread(target=run_upload_t, args=(app, chat_id, url, None))
+                    upload_thread.start()
+                else:
+                    globals.run = 0
+                    del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
+                    print(f"Completed tasks for chat_id {chat_id}")
+        else:
+            time.sleep(1)
 
 @app.on_message(filters.private & filters.command("start"))
 async def _start(client,message:types.Message):
@@ -81,3 +103,11 @@ async def _get_h(client,message:types.Message):
     else:
         await message.reply("You are not my auther!🫠")
     
+@app.on_message(filters.private & filters.command("tasks"))
+async def _p_tasks(client,message:types.Message):
+    if str() in Config.AuthU:
+        listn_tasks=Thread(target=process_tasks, daemon=True)
+        listn_tasks.start()
+        await message.reply("Listn Started!...")
+    else:
+        await message.reply("You are not my auther!🫠")
