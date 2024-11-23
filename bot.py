@@ -46,7 +46,7 @@ def s_pro():
     return jsonify({"s":1,"progress": globals.progress_s,"message":"success!"})
 
 def run_upload_t(chat_id, video_url,n_caption):
-    asyncio.run(upload_from_url(app, chat_id=chat_id, url=video_url, n_caption=n_caption))
+    asyncio.run(upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption))
 
 @flask_app.route('/upload', methods=['GET'])
 def upload_video():
