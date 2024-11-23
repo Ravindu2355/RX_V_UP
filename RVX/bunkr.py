@@ -65,15 +65,19 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
     main_ls=[]
     start_time=time.time()
     for ul in bls:
-      vl= bunkr_ex_v(ul)
-      if "bunkr" in vl:
-         main_ls.append(vl)
-      now = time.time()
-      diff=now-star_time
-      if round(diff % 10.00) == 0:
-        await msg.edit_text(f"extracted {len(main_ls)} of {link_l}")
+      try:
+        vl= bunkr_ex_v(ul)
+        if "bunkr" in vl:
+           main_ls.append(vl)
+        now = time.time()
+        diff=now-star_time
+        if round(diff % 10.00) == 0:
+            await msg.edit_text(f"extracted {len(main_ls)} of {link_l}")
+      except Exception as e:
+        print(f"bunkr bulk link err: {e}")
+        await msg.edit_text(f"Err on-Extract video sources: {e}")
     globals.tasks[str(chat_id)]=main_ls
-    msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡")
+    await msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡")
 
 
 
