@@ -18,17 +18,20 @@ def bunkr_ex_v(media_pg):
     response = requests.get(media_pg, headers=headers)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
-    media_links = []
+    media_links = ""
 
     # Look for media links based on tags or attributes used by bunkrr.su
     for video_tag in soup.find_all('video'):
       if video_tag:
         video_src = video_tag.find('source')['src'] if video_tag.find('source') else video_tag['src']
         print(f'Video source URL: {video_src}')
-        if video_src.startswith("http") and "/v/" in video_src:
-            media_link=src
+        if video_src.startswith("http") and "bunkr" in video_src:
+            media_link=video_src
 
-    return media_link
+    if media_link:
+       return media_link
+    else:
+       return ""
   
 def get_bunkrr_media_links(page_url):
     """Scrape media links from a Bunkrr page."""
@@ -38,14 +41,16 @@ def get_bunkrr_media_links(page_url):
     response = requests.get(page_url, headers=headers)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
-    media_links = []
+    media_link = []
 
     # Look for media links based on tags or attributes used by bunkrr.su
     for link in soup.find_all("a", href=True):
         if link["href"].startswith("http") and "/v/" in link["href"]:
             media_links.append(link["href"])
-
-    return media_links
+    if media_links:
+       return media_links
+    else:
+       return []
 
 async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
   if "/v/" in url and "bunkr" in url:
