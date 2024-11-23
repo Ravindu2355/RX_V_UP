@@ -101,11 +101,11 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
                           # elapsed_time if elapsed_time != '' else "0 s",
                           estimated_total_time if estimated_total_time != '' else "0 s"
                        )
-                       nn_s = f"Downloading: {progress}\n\nP:{percent:.2f}%\n{tmp}"
+                       nn_s = f"🔰**Downloading!....**🔰\n\n{progress}\n\nP:{percent:.2f}%\n{tmp}"
                        if nn_s != tr_s:  #avoiding same message sending err......
                            tr_s = nn_s
                            await reply_msg.edit_text(nn_s)
-        await reply_msg.edit_text(f"Download complete. Generating thumbnail...\nchat_id:{chat_id} filename:{filename}")
+        await reply_msg.edit_text(f"Download complete. Generating thumbnail...\nfilename:{filename}")
         globals.progress_s="Download complete. Generating thumbnail..."
         thumb_path = Config.DEF_THUMB_NAIL_VID_S
         if thumb_path is None or thumb_path == "":
@@ -134,7 +134,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
                thumb=thumb_path,
                supports_streaming=True,  # Ensure the video is streamable
                progress=progress_for_pyrogram,
-               progress_args=("uploading!",reply_msg,start_time)
+               progress_args=("🔰**Uploading!...**🔰\n\n",reply_msg,start_time)
              )
             fid=s_v.video.file_id
         else:
