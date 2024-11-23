@@ -7,15 +7,13 @@ from PIL import Image
 from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from Func.cookie import r_cookies, w_cookies, clear_cookies
 from Func.headers import load_headers
-from Func.simple_func import delete_file, get_file_name_from_response
+from Func.simple_func import delete_file, get_file_name_from_response, intt
 import globals
 from config import Config
 
 sizelimit = Config.TG_MAX_FILE_SIZE
 
 async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=None, s_type="video",reply_msg=None):
-    #global globals.progress_s,globals.run
-    # Check required arguments
     if reply_msg is None:
         reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
     else:
