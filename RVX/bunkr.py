@@ -56,7 +56,7 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
   if "/v/" in url and "bunkr" in url:
     vd=bunkr_ex_v(url);
     add_header("Referer","https://bunkr.ph/")
-    await upload_from_url(app, chat_id, video)
+    await upload_from_url(app, chat_id, vd)
     reset_headers()
   else:
     bls = get_bunkrr_media_links(url)
