@@ -81,7 +81,7 @@ def process_tasks():
                    del tasks[chat_id]  # Remove the task for the chat_id after processing
                    print(f"Completed tasks for chat_id {chat_id}")
         else:
-            time.sleep(2)  # Wait if no tasks are available
+            time.sleep(1)  # Wait if no tasks are available
 
 
 
@@ -90,7 +90,8 @@ def run_flask():
 
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
-Thread(target=process_tasks, daemon=True).start()
+listn_tasks=Thread(target=process_tasks, daemon=True)
+listn_tasks.start()
 
 
 if __name__ == "__main__" :
