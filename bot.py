@@ -86,17 +86,24 @@ def process_tasks():
 def run_flask():
     flask_app.run(host='0.0.0.0', port=5000)
 
-def start_client():
+def start_pyrogram():
+    # Start the Pyrogram client and begin listening for messages
     with app:
-        # Start the Flask app in a separate thread
-        flask_thread = Thread(target=run_flask)
-        flask_thread.start()
+        app.run()
 
-        # Start the task processing
-        listn_tasks = Thread(target=process_tasks, daemon=True)
-        listn_tasks.start()
+def start_client():
+    # Start both Flask and Pyrogram in separate threads
+    flask_thread = Thread(target=run_flask)
+    flask_thread.start()
 
+    # Start the Pyrogram client in its own thread
+    pyrogram_thread = Thread(target=start_pyrogram)
+    pyrogram_thread.start()
+
+    # Start the task processing thread
+    listn_tasks = Thread(target=process_tasks, daemon=True)
+    listn_tasks.start()
 
 if __name__ == "__main__":
-    # Start the Pyrogram client and Flask app
+    # Start both Flask and Pyrogram
     start_client()
