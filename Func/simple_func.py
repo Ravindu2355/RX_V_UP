@@ -24,5 +24,15 @@ def get_file_name_from_response(response):
     
     # Fallback to extracting the file name from the URL
     return f"video_{str(time.time())}.mp4"
+    
+def intt(value):
+    if isinstance(value, int):
+        return value
+    else:
+        try:
+            return int(value)
+        except ValueError:
+            print(f"Cannot convert {value} to an integer.")
+            return None  # Return None or handle the error as needed
 
 video_ext = ["mp4", "mkv", "avi", "mov", "flv", "wmv", "webm", "mpeg", "mpg", "3gp", "ts", "vob", "ogv", "ogx", "m4v", "f4v", "rm", "rmvb", "asf", "divx", "xvid", "svq3", "qt", "amv", "gifv"]
