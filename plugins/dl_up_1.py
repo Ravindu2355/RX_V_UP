@@ -4,6 +4,7 @@ from pyrogram import filters, types
 import asyncio, os, time, requests, math, psutil, json
 from moviepy.editor import VideoFileClip
 from PIL import Image
+from bot import app as bot
 from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from Func.cookie import r_cookies, w_cookies, clear_cookies
 from Func.headers import load_headers
