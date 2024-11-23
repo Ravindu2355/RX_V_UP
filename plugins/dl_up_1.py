@@ -190,3 +190,4 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
         globals.run = 0
         delete_file(filename) #deleteing files if they downloaded...
         delete_file(thumb_path)
+    time.sleep(2)
