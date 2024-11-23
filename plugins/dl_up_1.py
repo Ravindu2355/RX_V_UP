@@ -105,7 +105,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
                        if nn_s != tr_s:  #avoiding same message sending err......
                            tr_s = nn_s
                            await reply_msg.edit_text(nn_s)
-        await reply_msg.edit_text("Download complete. Generating thumbnail...")
+        await reply_msg.edit_text(f"Download complete. Generating thumbnail...\nchat_id:{chat_id} filename:{filename}")
         globals.progress_s="Download complete. Generating thumbnail..."
         thumb_path = Config.DEF_THUMB_NAIL_VID_S
         if thumb_path is None or thumb_path == "":
