@@ -124,11 +124,11 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
             await reply_msg.reply(f"Send Er:No chat_id {chat_id}")
         if not filename:
             await reply_msg.reply(f"Send Er:No file {filename}")
-        await reply_msg.reply(f"Download complete. Generating thumbnail...\nchat_id:{chat_id} filename:{filename}")
+        #await reply_msg.reply(f"Download complete. Generating thumbnail...\nchat_id:{chat_id} filename:{filename}")
         if s_type == "video":
             s_v = await reply_msg.reply_video(
             #s_v = await app.send_video(
-               chat_id = int(chat_id),
+               #chat_id = int(chat_id),
                video = filename,
                duration=duration,
                caption=m_caption,
@@ -141,7 +141,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
         else:
             s_v = await reply_msg.reply_document(
             #s_v =  await app.send_document(
-               chat_id = int(chat_id),
+               #chat_id = int(chat_id),
                document = filename,
                caption=m_caption,
                progress=progress_for_pyrogram,
