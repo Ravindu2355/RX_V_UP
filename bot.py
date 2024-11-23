@@ -70,7 +70,6 @@ def upload_video():
 
 def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
-    if globals.run == 0:
       while True:
           if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
             for chat_id, urls in list(globals.tasks.items()):
