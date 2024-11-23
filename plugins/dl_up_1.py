@@ -19,11 +19,11 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
     else:
         await reply_msg.edit_text("🔰Processing....!🔰")
     if not app:
-        await reply_msg.edit_text(f"Er:No app Arg!")
+        await reply_msg.reply(f"Er:No app Arg!")
     if not chat_id:
-        await reply_msg.edit_text(f"Er:No chat_id Arg!")
+        await reply_msg.reply(f"Er:No chat_id Arg!")
     if not url:
-        await reply_msg.edit_text(f"Er:No url Arg!")
+        await reply_msg.reply(f"Er:No url Arg!")
     globals.progress_s="Processing...!"
     globals.run = 1
     try:
