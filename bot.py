@@ -7,7 +7,7 @@ from threading import Thread
 from config import Config
 from plugins.dl_up_1 import upload_from_url
 import globals
-from Func.log import logger as lg
+
 
 API_ID = Config.API_ID
 API_HASH = Config.API_HASH
@@ -92,10 +92,10 @@ def run_flask():
 
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
-lg.info("Flask server 2 started!...")
+
 listn_tasks=Thread(target=process_tasks, daemon=True)
 listn_tasks.start()
-lg.info("Lisning on tasks...")
+
 
 if __name__ == "__main__" :
     app.run()
