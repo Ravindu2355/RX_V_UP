@@ -100,6 +100,7 @@ async def start_pyrogram():
     lg.info("Starting RVX pyrogram bot....")
     app.run() # Pyrogram will now run in the asyncio event loop
     lg.info("RVX Bot_started....")
+    
 async def pro_listener():
     """Function to run Flask in a non-blocking async loop."""
     #from threading import Thread
@@ -112,11 +113,12 @@ async def pro_listener():
 async def main():
     # Start Flask, Pyrogram, and the progress listener in the same asyncio event loop
     await asyncio.gather(
+        pro_listener(),
         start_flask_in_async(),  # Run Flask in a separate thread in the async event loop
-        start_pyrogram(),        # Run Pyrogram client in the async event loop
-        pro_listener()      # Start listening for progress updates
+        #start_pyrogram(),# Run Pyrogram client in the async event loop     
     )
 
 if __name__ == "__main__":
     globals.progress_s = "free"  # Initialize progress state to "free"
     asyncio.run(main())  # Run the combined asyncio event loop
+    app.run()
