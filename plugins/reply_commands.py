@@ -6,6 +6,7 @@ from Func.reply_text import Text
 import psutil
 from Func.headers import get_headers, add_header, reset_headers
 from plugins.dl_up_1 import upload_from_url
+from threading import Thread
 import globals
 
 def run_upload_t(app, chat_id, video_url, n_caption):
