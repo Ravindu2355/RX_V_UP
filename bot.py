@@ -46,8 +46,6 @@ async def pr_free():
 def s_pro():
     return jsonify({"s":1,"progress": globals.progress_s,"message":"success!"})
 
-def run_upload_t(chat_id, video_url,n_caption):
-    asyncio.run(upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption))
 
 @flask_app.route('/upload', methods=['GET'])
 def upload_video():
@@ -69,22 +67,6 @@ def upload_video():
     except Exception as e:
         return jsonify({"s":0,"message": f"Err on run: {e}","resd":f"chat_id: {chat_id} & url: {video_url}"})
 
-def process_tasks():
-    """Monitors the tasks dictionary and processes tasks when available."""
-    while True:
-        if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
-            for chat_id, urls in list(globals.tasks.items()):
-                if globals.tasks[chat_id]:  # Ensure the task list for chat_id is not empty
-                    globals.run = 1
-                    url = globals.tasks[chat_id].pop()  # Pop a URL from the task list
-                    upload_thread = Thread(target=run_upload_t, args=(chat_id, url, None))
-                    upload_thread.start()
-                else:
-                    globals.run = 0
-                    del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
-                    print(f"Completed tasks for chat_id {chat_id}")
-        else:
-            time.sleep(1)
 
 
 def run_flask():
@@ -93,8 +75,8 @@ def run_flask():
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
 
-listn_tasks=Thread(target=process_tasks, daemon=True)
-listn_tasks.start()
+#listn_tasks=Thread(target=process_tasks, daemon=True)
+#listn_tasks.start()
 
 
 if __name__ == "__main__" :
