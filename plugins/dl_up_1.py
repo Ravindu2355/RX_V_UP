@@ -17,6 +17,8 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
     #global globals.progress_s,globals.run
     if reply_msg:
         reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
+    else:
+        await reply_msg.edit_text("🔰Processing....!🔰")
     globals.progress_s="Processing...!"
     globals.run = 1
     try:
