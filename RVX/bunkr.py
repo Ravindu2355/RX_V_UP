@@ -76,6 +76,7 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
       except Exception as e:
         print(f"bunkr bulk link err: {e}")
         await msg.edit_text(f"Err on-Extract video sources: {e}")
+    add_header("Referer","https://bunkr.ph/")
     globals.tasks[str(chat_id)]=main_ls
     await msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡")
 
