@@ -72,7 +72,7 @@ def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
     if globals.run == 0:
       while True:
-        if globals.tasks:  # Check if the tasks dictionary is not empty
+          if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
             for chat_id, urls in list(globals.tasks.items()):
                 if globals.tasks[chat_id]:
                    globals.run=1
@@ -83,7 +83,7 @@ def process_tasks():
                    globals.run = 0
                    del tasks[chat_id]# Remove the task for the chat_id after processing
                    print(f"Completed tasks for chat_id {chat_id}")
-        else:
+          else:
             time.sleep(1)  # Wait if no tasks are available
 
 
