@@ -18,7 +18,7 @@ def bunkr_ex_v(media_pg):
     response = requests.get(media_pg, headers=headers)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
-    media_links = ""
+    media_link = ""
 
     # Look for media links based on tags or attributes used by bunkrr.su
     for video_tag in soup.find_all('video'):
@@ -41,7 +41,7 @@ def get_bunkrr_media_links(page_url):
     response = requests.get(page_url, headers=headers)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
-    media_link = []
+    media_links = []
 
     # Look for media links based on tags or attributes used by bunkrr.su
     for link in soup.find_all("a", href=True):
