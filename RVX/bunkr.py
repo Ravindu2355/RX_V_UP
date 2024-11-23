@@ -15,7 +15,7 @@ def bunkr_ex_v(media_pg):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
     }
-    response = requests.get(page_url, headers=headers)
+    response = requests.get(media_pg, headers=headers)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
     media_links = []
@@ -48,7 +48,7 @@ def get_bunkrr_media_links(page_url):
     return media_links
 
 async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
-  if "/v/" in url:
+  if "/v/" in url and "bunkr" in url:
     vd=bunkr_ex_v(url);
     add_header("Referer","https://bunkr.ph/")
     await upload_from_url(app, chat_id, video)
@@ -60,7 +60,8 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
     start_time=time.time()
     for ul in bls:
       vl= bunkr_ex_v(ul)
-      main_ls.append(vl)
+      if "bunkr" in vl:
+         main_ls.append(vl)
       now = time.time()
       diff=now-star_time
       if round(diff % 10.00) == 0:
