@@ -1,4 +1,4 @@
-import os,time
+import os, time, asyncio
 from pyrogram import Client as app
 from pyrogram import filters, types
 from config import Config
@@ -26,6 +26,7 @@ def process_tasks():
                     globals.run = 0
                     del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
                     print(f"Completed tasks for chat_id {chat_id}")
+                    asyncio.run(app.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
         else:
             time.sleep(1)
 
@@ -109,6 +110,6 @@ async def _p_tasks(client,message:types.Message):
     if str() in Config.AuthU:
         listn_tasks=Thread(target=process_tasks, daemon=True)
         listn_tasks.start()
-        await message.reply("Listn Started!...")
+        await message.reply("🔰Listning on tasks Started!...🚀")
     else:
         await message.reply("You are not my auther!🫠")
