@@ -4,7 +4,7 @@ import time
 from threading import Thread
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from pyrogram import Client
+from pyrogram import Client, filters
 from config import Config
 from plugins.dl_up_1 import upload_from_url
 import globals
@@ -83,27 +83,39 @@ def process_tasks():
         else:
             time.sleep(1)
 
-def run_flask():
-    flask_app.run(host='0.0.0.0', port=5000)
+async def start_flask_in_async():
+    """Function to run Flask in a non-blocking async loop."""
+    from threading import Thread
+    def flask_thread():
+        flask_app.run(host="0.0.0.0", port=5000, use_reloader=False)
+    thread = Thread(target=flask_thread)
+    thread.start()
+    
+    # Allow Flask to run without blocking the event loop
+    await asyncio.sleep(1)
 
-def start_pyrogram():
-    # Start the Pyrogram client and begin listening for messages
-    with app:
-        app.run()
+async def start_pyrogram():
+    """Function to start the Pyrogram client in an async event loop."""
+    async with app:
+        await app.run()  # Pyrogram will now run in the asyncio event loop
 
-def start_client():
-    # Start both Flask and Pyrogram in separate threads
-    flask_thread = Thread(target=run_flask)
-    flask_thread.start()
+async def progress_listener():
+    """Function to listen for progress updates and update the global progress status."""
+    @app.on_message(filters.command("progress"))
+    async def progress(client, message):
+        if globals.progress_s:
+            await message.reply(f"Current progress: {globals.progress_s}")
+        else:
+            await message.reply("No progress update available.")
 
-    # Start the Pyrogram client in its own thread
-    pyrogram_thread = Thread(target=start_pyrogram)
-    pyrogram_thread.start()
-
-    # Start the task processing thread
-    listn_tasks = Thread(target=process_tasks, daemon=True)
-    listn_tasks.start()
+async def main():
+    # Start Flask, Pyrogram, and the progress listener in the same asyncio event loop
+    await asyncio.gather(
+        start_flask_in_async(),  # Run Flask in a separate thread in the async event loop
+        start_pyrogram(),        # Run Pyrogram client in the async event loop
+        progress_listener()      # Start listening for progress updates
+    )
 
 if __name__ == "__main__":
-    # Start both Flask and Pyrogram
-    start_client()
+    globals.progress_s = "free"  # Initialize progress state to "free"
+    asyncio.run(main())  # Run the combined asyncio event loop
