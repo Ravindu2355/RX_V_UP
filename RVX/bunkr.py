@@ -56,6 +56,7 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
   else:
     bls = get_bunkrr_media_links(url)
     link_l =len(bls)
+    await msg.edit_text(f"Extracted: {link_l} of media pages")
     main_ls=[]
     start_time=time.time()
     for ul in bls:
