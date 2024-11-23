@@ -70,7 +70,7 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
         if "bunkr" in vl:
            main_ls.append(vl)
         now = time.time()
-        diff=now-star_time
+        diff=now-start_time
         if round(diff % 10.00) == 0:
             await msg.edit_text(f"extracted {len(main_ls)} of {link_l}")
       except Exception as e:
