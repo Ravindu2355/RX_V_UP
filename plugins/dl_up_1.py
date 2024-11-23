@@ -123,6 +123,11 @@ async def upload_from_url(app:Client, chat_id:str, url: str, n_name=None, n_capt
           globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
         fid = None
+        if not chat_id:
+            await reply_msg.reply(f"Send Er:No chat_id {chat_id}")
+        if not filename:
+            await reply_msg.reply(f"Send Er:No file {filename}")
+
         if s_type == "video":
             s_v = await app.send_video(
                chat_id = int(chat_id),
