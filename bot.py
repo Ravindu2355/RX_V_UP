@@ -70,21 +70,20 @@ def upload_video():
 
 def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
-      while True:
-          if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
+    while True:
+        if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
             for chat_id, urls in list(globals.tasks.items()):
-                if globals.tasks[chat_id]:
-                   globals.run=1
-                   url= globals.tasks[chat_id].pop()
-                   upload_thread = Thread(target=run_upload_t, args=(chat_id, url,None))
-                   upload_thread.start()
+                if globals.tasks[chat_id]:  # Ensure the task list for chat_id is not empty
+                    globals.run = 1
+                    url = globals.tasks[chat_id].pop()  # Pop a URL from the task list
+                    upload_thread = Thread(target=run_upload_t, args=(chat_id, url, None))
+                    upload_thread.start()
                 else:
-                   globals.run = 0
-                   del tasks[chat_id]# Remove the task for the chat_id after processing
-                   print(f"Completed tasks for chat_id {chat_id}")
-          else:
-            time.sleep(1)  # Wait if no tasks are available
-
+                    globals.run = 0
+                    del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
+                    print(f"Completed tasks for chat_id {chat_id}")
+        else:
+            time.sleep(1)
 
 
 def run_flask():
