@@ -8,6 +8,7 @@ from pyrogram import Client, filters
 from config import Config
 from plugins.dl_up_1 import upload_from_url
 import globals
+from Func.log import logger as lg
 
 # Initialize API_ID, API_HASH, and BOT_TOKEN from Config
 API_ID = Config.API_ID
@@ -90,21 +91,21 @@ async def start_flask_in_async():
         flask_app.run(host="0.0.0.0", port=5000, use_reloader=False)
     thread = Thread(target=flask_thread)
     thread.start()
-    
+    lg.info("Started Flask Web.....")
     # Allow Flask to run without blocking the event loop
     await asyncio.sleep(1)
 
 async def start_pyrogram():
     """Function to start the Pyrogram client in an async event loop."""
-    async with app:
-        await app.run()  # Pyrogram will now run in the asyncio event loop
-
+    lg.info("Starting RVX pyrogram bot....")
+    app.run() # Pyrogram will now run in the asyncio event loop
+    lg.info("RVX Bot_started....")
 async def pro_listener():
     """Function to run Flask in a non-blocking async loop."""
     #from threading import Thread
     thread = Thread(target=process_tasks,daemon=True)
     thread.start()
-    
+    lg.info("Lisning on tasks!...")
     # Allow Flask to run without blocking the event loop
     await asyncio.sleep(1)
     
