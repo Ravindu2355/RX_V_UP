@@ -14,8 +14,8 @@ def flatten_structure(data, key:str, value, cons:str):
         if item.get(key) == value:
             result.append(item)
         else:
-            if cons in item
-            result.extend(flatten_structure(item[cons]))    
+            if cons in item:
+              result.extend(flatten_structure(item[cons]))    
     return result
 
 
