@@ -62,8 +62,9 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
   else:
     bls = get_bunkrr_media_links(url)
     link_l =len(bls)
-    await msg.edit_text(f"Extracted: {link_l} of media pages")
+    await msg.edit_text(f"🔰Extracted: {link_l} of media pages🧾")
     main_ls=[]
+    erl=[]
     start_time=time.time()
     for ul in bls:
       try:
@@ -76,11 +77,13 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
             await msg.edit_text(f"extracted {len(main_ls)} of {link_l}")
       except Exception as e:
         print(f"bunkr bulk link err: {e}")
-        await msg.edit_text(f"Err on-Extract video sources: {e}")
+        erl.append(ul)
+        await msg.reply(f"Err on-Extract video sources: {e}\n try again with this link later the tasks done!🫠\nLink: {ul}")
+        pass
     add_header("Referer","https://bunkr.ph/")
     #globals.tasks[str(chat_id)]=main_ls
     set_t = set_tasks(chat_id,main_ls)
-    await msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡\n{set_t}")
+    await msg.edit_text(f"All Links Extracted from **Bunkr** ({link_l}/{len(main_ls)}) and {len(erl)} are can not extract🤕.Extracted links will be send soon🙂🙂🫡\n{set_t}")
 
 
 
