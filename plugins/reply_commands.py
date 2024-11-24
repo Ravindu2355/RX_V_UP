@@ -5,6 +5,7 @@ from config import Config
 from Func.reply_text import Text
 import psutil
 from Func.headers import get_headers, add_header, reset_headers
+from Func.task_manager import get_tasks_count
 from plugins.dl_up_1 import upload_from_url
 from threading import Thread
 import globals
@@ -107,9 +108,18 @@ async def _get_h(client,message:types.Message):
     
 @app.on_message(filters.private & filters.command("tasks"))
 async def _p_tasks(client,message:types.Message):
-    if str() in Config.AuthU:
+    if str(message.chat.id) in Config.AuthU:
         listn_tasks=Thread(target=process_tasks, daemon=True)
         listn_tasks.start()
         await message.reply("🔰Listning on tasks Started!...🚀")
+    else:
+        await message.reply("You are not my auther!🫠")
+
+@app.on_message(filters.private & filters.command("numbT"))
+async def _len_tasks(client,message:types.Message):
+    if str(message.chat.id) in Config.AuthU:
+        chat_id=message.chat.id
+        ct=get_tasks_count(chat_id)
+        await message.reply(f"🔰Your reiming task count is {ct}...🚀")
     else:
         await message.reply("You are not my auther!🫠")
