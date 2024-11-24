@@ -1,5 +1,13 @@
 import os
 
+def bytes_to_human_readable(byte_count):
+    units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    i = 0
+    while byte_count >= 1024 and i < len(units) - 1:
+        byte_count /= 1024.0
+        i += 1
+    return f"{byte_count:.1f}{units[i]}"
+
 def delete_file(file_path):
     if os.path.exists(file_path):
         try:
