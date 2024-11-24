@@ -79,7 +79,7 @@ async def tera(app, msg, url, chat_id):
       flist= mfiles(tx['list'])
       for fi in flist:
         if fi['is_dir'] == 0 or fi['is_dir'] == "0":
-          dls = await dlg(tx['uk'], tx['shareid'], tx['timestamp'], tx['sign'], tx['js_token'], tx['cookie'], file)
+          dls = dlg(tx['uk'], tx['shareid'], tx['timestamp'], tx['sign'], tx['js_token'], tx['cookie'], file)
           if dls and dls["status"] == "success":
             if dls["download_link"]:
               keys=[]
