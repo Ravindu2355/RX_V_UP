@@ -11,8 +11,8 @@ def reset_tasks():
 def remove_user_tasks(chat_id):
   if chat_id:
     id=str(chat_id)
-    if globals.tasks[chat_id]:
-      del globals.tasks[chat_id]
+    if globals.tasks[id]:
+      del globals.tasks[id]
       return "Tasks deleted for you!."
     else:
       return "No tasks for you!."
@@ -21,11 +21,12 @@ def remove_user_tasks(chat_id):
 
 def set_tasks(chat_id, tasks):
   if chat_id:
-    if globals.tasks[chat_id]:
-      globals[chat_id].extend(tasks)
+    id=str(chat_id)
+    if globals.tasks[id]:
+      globals[id].extend(tasks)
       return "Tasks Add to task list!.."
     else:
-      globals.tasks[chat_id]=tasks
+      globals.tasks[id]=tasks
       return "Add to tasks..."
   else:
     return "No user!..."
@@ -33,19 +34,21 @@ def set_tasks(chat_id, tasks):
 
 def add_task(chat_id, task):
   if chat_id:
-    if globals.tasks[chat_id]:
-      globals[chat_id].append(task)
+    id=str(chat_id)
+    if globals.tasks[id]:
+      globals[id].append(task)
       return "Tasks Add to task list!.."
     else:
-      globals.tasks[chat_id]=tasks
+      globals.tasks[id]=tasks
       return "Add to tasks..."
   else:
     return "No user!..."
 
 def get_tasks_count(chat_id):
   if chat_id:
-    if globals.tasks[chat_id]:
-      return len(globals[chat_id])
+    id=str(chat_id)
+    if globals.tasks[id]:
+      return len(globals[id])
     else:
       return "No tasks!"
   else:
