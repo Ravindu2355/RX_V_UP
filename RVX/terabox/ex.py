@@ -85,7 +85,7 @@ async def tera(app, msg, url, chat_id):
               keys=[]
               for k in dls["download_link"]:
                 bs = [{"text":k,"url":dls["download_link"][k]}]
-                keys.append(ns)
+                keys.append(bs)
               kboard = make_keyboard(keys)
               await msg.reply_photo(
                 photo=fi['image'],
