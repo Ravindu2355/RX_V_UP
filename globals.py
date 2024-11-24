@@ -5,9 +5,9 @@ multi_t = 0 #multi task count somehelp for add more tasks to bot...
 tasks={}
 task_help={
   "bunkr":{
-    headers:{
+    "headers":{
       "Referer": "https://bunkr.ph/"
-    },
+    }
   },
   "DESI":{
     
