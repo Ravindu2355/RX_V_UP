@@ -7,6 +7,7 @@ from pyrogram import Client, filters, types
 import asyncio, os, time, math, psutil, requests
 import json
 from Func.headers import add_header,reset_headers
+from Func.task_manager import add_task, set_tasks
 
 dl_h = {
   "Referer": "https://bunkr.ph/"
@@ -77,8 +78,9 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
         print(f"bunkr bulk link err: {e}")
         await msg.edit_text(f"Err on-Extract video sources: {e}")
     add_header("Referer","https://bunkr.ph/")
-    globals.tasks[str(chat_id)]=main_ls
-    await msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡")
+    #globals.tasks[str(chat_id)]=main_ls
+    set_t = set_tasks(chat_id,main_ls)
+    await msg.edit_text(f"All Links Extracted ({link_l}/{len(main_ls)}) and they will be send soon🙂🙂🫡\n{set_t}")
 
 
 
