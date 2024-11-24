@@ -86,7 +86,10 @@ async def tera(app, msg, url, chat_id):
             await msg.edit_text("Err on File Extractor!...")
         else:
           await msg.edit_text("File Ex err")
-      await msg.delete()
+      if len(flist) == 0:
+         await msg.edit_text("Sorry i have no extracted links!")
+      else:
+         await msg.edit_text(f"Extracted {len(flist)} of terabox links!")
     else:
       await msg.edit_text("Sorry i cant recognize files!")
   else:
