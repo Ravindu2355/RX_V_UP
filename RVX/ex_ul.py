@@ -3,7 +3,8 @@ from pyrogram import Client, filters, types
 import asyncio, os, time, math, psutil
 import json
 from urllib.parse import urlparse
-from RVX.bunkr import ex_bunkr
+from RVX.bunkr.ex import ex_bunkr
+from RVX.terabox.ex import tera
 from config import Config
 
 async def ex_url(app,msg,url,chat_id=Config.M_CHAT):
