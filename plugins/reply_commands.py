@@ -25,11 +25,13 @@ def process_tasks():
                     for key in globals.task_help:
                         if key in url:
                             setting=globals.task_help[key]
-                            if setting["headers"]:
+                            if "headers" in setting:
                                 for kk in setting["headers"]:
                                     v=setting["headers"]
-                                    add_header(kk,v)
-                            if setting["cookie"]:
+                                    for hk in v:
+                                        hv=v[hk]
+                                        add_header(hk,hv)
+                            if "cookie" in setting:
                                 w_cookies(setting["cookie"])
                     upload_thread = Thread(target=run_upload_t, args=(app, chat_id, url, None))
                     upload_thread.start()
