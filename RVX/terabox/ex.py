@@ -58,7 +58,7 @@ def dlg(uk, sid, ts, sign, jt, c, fid):
       'sign'      : sign,
       'js_token'  : jt,
       'cookie'    : c,
-      'fs_id': fid
+      'fs_id'     : fid
     }
     get_link_url = f"{api}/generate_link"  # Replace 'api' with the appropriate URL
     headers = {'Content-Type': 'application/json'}
