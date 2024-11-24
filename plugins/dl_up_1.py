@@ -188,6 +188,5 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
         globals.progress_s=f"An error occurred: {str(e)} uper1"
         print(e)
         globals.run = 0
-        delete_file(filename) #deleteing files if they downloaded...
-        delete_file(thumb_path)
-    time.sleep(2)
+        #delete_file(filename) #deleteing files if they downloaded...
+        #delete_file(thumb_path)
