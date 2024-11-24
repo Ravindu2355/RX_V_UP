@@ -18,7 +18,7 @@ def mfiles(data):
                 result.extend(mfiles(item['list']))    
     return result
 
-def getf():
+def getf(url):
     # Define the URLs and headers
     url = 'https://www.terabox.app/wap/share/filelist?surl=GJACgid49fFsWkxtfVH3cA'
     get_file_url = f'{api}/generate_file'  # Replace 'api' with the appropriate variable
