@@ -8,6 +8,19 @@ def bytes_to_human_readable(byte_count):
         i += 1
     return f"{byte_count:.1f}{units[i]}"
 
+def flatten_structure(data, key:str, value, cons:str):
+    result = []    
+    for item in data:
+        if item.get(key) == value:
+            result.append(item)
+        else:
+            if cons in item
+            result.extend(flatten_structure(item[cons]))    
+    return result
+
+
+
+
 def delete_file(file_path):
     if os.path.exists(file_path):
         try:
