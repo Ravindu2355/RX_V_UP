@@ -6,6 +6,7 @@ from Func.reply_text import Text
 import psutil
 from Func.headers import get_headers, add_header, reset_headers
 from Func.task_manager import get_tasks_count
+from Func.cookie import w_cookies
 from plugins.dl_up_1 import upload_from_url
 from threading import Thread
 import globals
@@ -20,7 +21,16 @@ def process_tasks():
             for chat_id, urls in list(globals.tasks.items()):
                 if globals.tasks[chat_id]:  # Ensure the task list for chat_id is not empty
                     globals.run = 1
-                    url = globals.tasks[chat_id].pop()  # Pop a URL from the task list
+                    url = globals.tasks[chat_id].pop()# Pop a URL from the task list
+                    for key in globals.task_help:
+                        if key in url:
+                            setting=globals.task_help[key]
+                            if setting["headers"]:
+                                for kk in setting["headers"]:
+                                    v=setting["headers"]
+                                    add_header(kk,v)
+                            if setting["cookie"]:
+                                w_cookies(setting["cookie"])
                     upload_thread = Thread(target=run_upload_t, args=(app, chat_id, url, None))
                     upload_thread.start()
                 else:
