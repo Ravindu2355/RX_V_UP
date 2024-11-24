@@ -19,8 +19,6 @@ def flatten_structure(data, key:str, value, cons:str):
     return result
 
 
-
-
 def delete_file(file_path):
     if os.path.exists(file_path):
         try:
