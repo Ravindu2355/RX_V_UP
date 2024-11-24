@@ -119,9 +119,13 @@ async def _get_h(client,message:types.Message):
 @app.on_message(filters.private & filters.command("tasks"))
 async def _p_tasks(client,message:types.Message):
     if str(message.chat.id) in Config.AuthU:
-        listn_tasks=Thread(target=process_tasks, daemon=True)
-        listn_tasks.start()
-        await message.reply("🔰Listning on tasks Started!...🚀")
+        if globals.task_listn == 0:
+            globals.task_listn = 1
+            listn_tasks=Thread(target=process_tasks, daemon=True)
+            listn_tasks.start()
+            await message.reply("🔰Listning on tasks Started!...🚀")
+        else:
+            await message.reply("I'm alredy listning on tasks!")
     else:
         await message.reply("You are not my auther!🫠")
 
