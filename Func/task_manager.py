@@ -22,7 +22,7 @@ def remove_user_tasks(chat_id):
 def set_tasks(chat_id, tasks):
   if chat_id:
     if globals.tasks[chat_id]:
-      if globals[chat_id].extend(tasks)
+      globals[chat_id].extend(tasks)
       return "Tasks Add to task list!.."
     else:
       globals.tasks[chat_id]=tasks
@@ -34,7 +34,7 @@ def set_tasks(chat_id, tasks):
 def add_task(chat_id, task):
   if chat_id:
     if globals.tasks[chat_id]:
-      if globals[chat_id].append(task)
+      globals[chat_id].append(task)
       return "Tasks Add to task list!.."
     else:
       globals.tasks[chat_id]=tasks
