@@ -36,11 +36,11 @@ app = Client(name="RVX_bot", bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, a
 def run_upload_t(app, chat_id, video_url, n_caption):
     asyncio.run(upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption))
 
-async def process_tasks():
+def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
     while True:
         if not app.is_connected:
-            await app.start()
+             asyncio.run(app.start())
         if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
             for chat_id, urls in list(globals.tasks.items()):
                 if globals.tasks[chat_id]:  # Ensure the task list for chat_id is not empty
