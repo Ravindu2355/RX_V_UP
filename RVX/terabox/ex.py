@@ -60,13 +60,13 @@ def dlg(uk, sid, ts, sign, jt, c, fid):
         return None
 
 async def tera(app, msg, url, chat_id):
-  tx=getf(url)
+  tx=await getf(url)
   if tx:
     if tx['list']:
       flist= mfiles(tx['list'])
       for fi in flist:
         if fi['is_dir'] == 0 or fi['is_dir'] == "0":
-          dls = dlg(tx['uk'], tx['shareid'], tx['timestamp'], tx['sign'], tx['js_token'], tx['cookie'], file)
+          dls =await dlg(tx['uk'], tx['shareid'], tx['timestamp'], tx['sign'], tx['js_token'], tx['cookie'], file)
           if dls and dls["status"] == "success":
             if dls["download_link"]:
               keys=[]
