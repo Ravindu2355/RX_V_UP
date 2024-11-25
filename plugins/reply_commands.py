@@ -40,8 +40,6 @@ def process_tasks():
                     del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
                     print(f"Completed tasks for chat_id {chat_id}")
                     asyncio.run(app.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
-        else:
-            time.sleep(1)
 
 @app.on_message(filters.private & filters.command("start"))
 async def _start(client,message:types.Message):
