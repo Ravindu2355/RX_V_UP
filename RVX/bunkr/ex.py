@@ -81,7 +81,7 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
         if round(diff % 10.00) == 0 and m_t!=prt:
             m_t = prt
             await msg.edit_text(m_t)
-        time.sleep(1)
+        #time.sleep(1)
       except Exception as e:
         print(f"bunkr bulk link err: {e}")
         erl.append(ul)
