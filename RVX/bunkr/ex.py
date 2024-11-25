@@ -65,16 +65,23 @@ async def ex_bunkr(app:Client,msg:types.Message,url,chat_id=Config.M_CHAT):
     await msg.edit_text(f"🔰Extracted: {link_l} of media pages🧾")
     main_ls=[]
     erl=[]
+    m_t=""
     start_time=time.time()
     for ul in bls:
       try:
-        vl= bunkr_ex_v(ul)
+        vl= await bunkr_ex_v(ul)
         if "bunkr" in vl:
            main_ls.append(vl)
         now = time.time()
         diff=now-start_time
-        if round(diff % 10.00) == 0:
-            await msg.edit_text(f"extracted {len(main_ls)} of {link_l}")
+        percent = (len(main_ls) / len(bls)) * 100
+        progress_i = int(20 * len(main_ls) / len(bls))
+        progress_bar = '[' + '✅️' * math.floor(progress_i) + '❌️' * math.floor((20 - progress_i)) + ']'
+        prt=f"**🔰RVX🔰**\n\n**Extracting medias**\n{progress_bar}\nprogress: {percent}%\nextracted: {len(main_ls)} of {link_l}"
+        if round(diff % 10.00) == 0 and m_t!=prt:
+            m_t = prt
+            await msg.edit_text(m_t)
+        time.sleep(1)
       except Exception as e:
         print(f"bunkr bulk link err: {e}")
         erl.append(ul)
