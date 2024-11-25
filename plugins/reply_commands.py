@@ -1,4 +1,4 @@
-import os, time, asyncio
+import os, time, asyncio, json
 from pyrogram import Client as app
 from bot import process_tasks
 from pyrogram import filters, types
@@ -63,7 +63,7 @@ async def _add_h(client,message:types.Message):
             ks=hs[1].split("--")
             k=ks[0]
             v=ks[1]
-            add_header(k,v)
+            await add_header(k,v)
             await message.reply(f"header setteded!\nkey:{k} value:{v}")
         else:
             await message.reply("No header string! use /add_h key--value")
@@ -74,7 +74,7 @@ async def _add_h(client,message:types.Message):
 @app.on_message(filters.private & filters.command("del_h"))
 async def _del_h(client,message:types.Message):
     if str(message.chat.id) in Config.AuthU:
-        reset_headers()
+        await reset_headers()
         await message.reply("headers reseted!")
     else:
         await message.reply("You are not my auther!🫠")
@@ -83,7 +83,7 @@ async def _del_h(client,message:types.Message):
 @app.on_message(filters.private & filters.command("get_h"))
 async def _get_h(client,message:types.Message):
     if str(message.chat.id) in Config.AuthU:
-        hh=get_headers()
+        hh=await get_headers()
         await message.reply(f"This is my defalt headers:\n{json.dumps(hh)}")
     else:
         await message.reply("You are not my auther!🫠")
@@ -105,7 +105,7 @@ async def _p_tasks(client,message:types.Message):
 async def _len_tasks(client,message:types.Message):
     if str(message.chat.id) in Config.AuthU:
         chat_id=message.chat.id
-        ct=get_tasks_count(chat_id)
+        ct=await get_tasks_count(chat_id)
         await message.reply(f"🔰Your reiming task count is {ct}...🚀")
     else:
         await message.reply("You are not my auther!🫠")
@@ -133,7 +133,7 @@ async def _r_0(client, msg:types.Message):
 @app.on_message(filters.command("t_task"))
 async def _task_run_c(client, msg:types.Message):
     if str(msg.chat.id) in Config.AuthU:
-       add_task(str(msg.chat.id),"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+       await add_task(str(msg.chat.id),"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
        await msg.reply("Example Task Add to the task list")
     else:
        await msg.reply("👿You are not my auther for that🤬")
