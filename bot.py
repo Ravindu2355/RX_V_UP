@@ -39,7 +39,7 @@ def run_upload_t(app, chat_id, video_url, n_caption):
 async def conn():
     await app.start()
     
-async def process_tasks():
+async def process_tasks(app):
     """Monitors the tasks dictionary and processes tasks when available."""
     while True:
         #if not app.is_connected:
@@ -104,7 +104,17 @@ def upload_video():
     except Exception as e:
         return jsonify({"s":0,"message": f"Err on run: {e}","resd":f"chat_id: {chat_id} & url: {video_url}"})
 
+def st_p(app):
+    global s
+    s = 1
+    def run_asyncio():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(process_tasks(app))
 
+    thread = Thread(target=run_asyncio)
+    thread.daemon = True  # Set the thread as a daemon thread
+    thread.start()
 
 def run_flask():
     flask_app.run(host='0.0.0.0', port=5000)
@@ -112,8 +122,9 @@ def run_flask():
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
 
-listn_tasks=Thread(target=process_tasks, daemon=True)
-listn_tasks.start()
+st_p(app)
+#listn_tasks=Thread(target=process_tasks, daemon=True)
+#listn_tasks.start()
 
 
 if __name__ == "__main__" :
