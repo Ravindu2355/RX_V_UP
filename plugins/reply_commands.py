@@ -109,3 +109,11 @@ async def _len_tasks(client,message:types.Message):
         await message.reply(f"🔰Your reiming task count is {ct}...🚀")
     else:
         await message.reply("You are not my auther!🫠")
+
+@app.on_message(filter.command("m_free"))
+async def _m_free(client,message:types.Message):
+    if globals.progress_s != "free" and "error" in globals.progress_s and globals.run == 0:
+        globals.progress_s = "free"
+        await message.reply("🔰Im free sorry for the Err!...🚀")
+    else:
+        await message.reply("😒Sorry Im running task thats not errored!💪")
