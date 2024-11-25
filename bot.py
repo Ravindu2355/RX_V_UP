@@ -106,8 +106,8 @@ def run_flask():
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
 
-#listn_tasks=Thread(target=process_tasks, daemon=True)
-#listn_tasks.start()
+listn_tasks=Thread(target=process_tasks, daemon=True)
+listn_tasks.start()
 
 
 if __name__ == "__main__" :
