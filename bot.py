@@ -62,7 +62,7 @@ def process_tasks():
                     del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
                     print(f"Completed tasks for chat_id {chat_id}")
                     asyncio.run_coroutine_threadsafe(app.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
-
+        time.sleep(2)
 
 @flask_app.route('/makefree')
 async def pr_free():
