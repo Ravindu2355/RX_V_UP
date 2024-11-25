@@ -39,7 +39,8 @@ def add_task(chat_id, task):
       globals.tasks[id].append(task)
       return "Tasks Add to task list!.."
     else:
-      globals.tasks[id]=tasks
+      globals.tasks[id]=[]
+      globals.tasks[id].append(task)
       return "Add to tasks..."
   else:
     return "No user!..."
