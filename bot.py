@@ -33,8 +33,8 @@ if not os.path.isdir(Config.download_dir):
 plugins = dict(root="plugins")
 app = Client(name="RVX_bot", bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, api_hash=Config.API_HASH, plugins=plugins)
 
-async def run_upload_t(app, chat_id, video_url, n_caption):
-    await upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption)
+def run_upload_t(app, chat_id, video_url, n_caption):
+    asyncio.run_coroutine_threadsafe(upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption))
 
 def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
