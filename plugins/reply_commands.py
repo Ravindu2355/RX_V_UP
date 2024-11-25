@@ -6,7 +6,7 @@ from config import Config
 from Func.reply_text import Text
 import psutil
 from Func.headers import get_headers, add_header, reset_headers
-from Func.task_manager import get_tasks_count
+from Func.task_manager import get_tasks_count, add_task
 from Func.cookie import w_cookies
 from plugins.dl_up_1 import upload_from_url
 from threading import Thread
@@ -123,11 +123,18 @@ async def _m_free(client,message:types.Message):
 
 @app.on_message(filters.command("run0"))
 async def _r_0(client, msg:types.Message):
-    if str(message.chat.id) in Config.AuthU:
+    if str(msg.chat.id) in Config.AuthU:
        globals.run=0
        globals.progress_s="free"
        await msg.reply("I,m exacly free now wait 1 sec for check if error happening!😒")
     else:
        await msg.reply("👿You are not my auther for that🤬")
 
-        
+@app.on_message(filters.command("t_task"))
+async def _task_run_c(client, msg:types.Message):
+    if str(msg.chat.id) in Config.AuthU:
+       add_task(str(msg.chat.id),"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+       await msg.reply("Example Task Add to the task list")
+    else:
+       await msg.reply("👿You are not my auther for that🤬")
+     
