@@ -6,6 +6,8 @@ from flask_cors import CORS
 from threading import Thread
 from config import Config
 from plugins.dl_up_1 import upload_from_url
+from Func.headers import get_headers, add_header, reset_headers
+from Func.cookie import w_cookies
 import globals
 
 
@@ -31,6 +33,35 @@ if not os.path.isdir(Config.download_dir):
 plugins = dict(root="plugins")
 app = Client(name="RVX_bot", bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, api_hash=Config.API_HASH, plugins=plugins)
 
+async def run_upload_t(app, chat_id, video_url, n_caption):
+    await upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption)
+
+def process_tasks():
+    """Monitors the tasks dictionary and processes tasks when available."""
+    while True:
+        if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
+            for chat_id, urls in list(globals.tasks.items()):
+                if globals.tasks[chat_id]:  # Ensure the task list for chat_id is not empty
+                    globals.run = 1
+                    url = globals.tasks[chat_id].pop()# Pop a URL from the task list
+                    for key in globals.task_help:
+                        if key in url:
+                            setting=globals.task_help[key]
+                            if "headers" in setting:
+                                for kk in setting["headers"]:
+                                    v=setting["headers"]
+                                    for hk in v:
+                                        hv=v[hk]
+                                        add_header(hk,hv)
+                            if "cookie" in setting:
+                                w_cookies(setting["cookie"])
+                    upload_thread = Thread(target=run_upload_t, args=(preapp, chat_id, url, None))
+                    upload_thread.start()
+                else:
+                    globals.run = 0
+                    del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
+                    print(f"Completed tasks for chat_id {chat_id}")
+                    asyncio.run_coroutine_threadsafe(preapp.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
 
 
 @flask_app.route('/makefree')
