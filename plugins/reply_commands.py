@@ -112,8 +112,22 @@ async def _len_tasks(client,message:types.Message):
 
 @app.on_message(filters.command("m_free"))
 async def _m_free(client,message:types.Message):
-    if globals.progress_s != "free" and "error" in globals.progress_s and globals.run == 0:
-        globals.progress_s = "free"
-        await message.reply("🔰Im free sorry for the Err!...🚀")
+    if str(message.chat.id) in Config.AuthU and globals.progress_s != "free" and "error" in globals.progress_s:
+        if globals.run==0:
+            globals.progress_s = "free"
+            await message.reply("🔰Im free sorry for the Err!...🚀")
+        else:
+            await message.reply("I,m exacly runing....")
     else:
         await message.reply("😒Sorry Im running task thats not errored!💪")
+
+@app.on_message(filters.command("run0"))
+async def _r_0(client, msg:types.Message):
+    if str(message.chat.id) in Config.AuthU:
+       globals.run=0
+       globals.progress_s="free"
+       await msg.reply("I,m exacly free now wait 1 sec for check if error happening!😒")
+    else:
+       await msg.reply("👿You are not my auther for that🤬")
+
+        
