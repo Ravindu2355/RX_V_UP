@@ -110,7 +110,7 @@ async def _len_tasks(client,message:types.Message):
     else:
         await message.reply("You are not my auther!🫠")
 
-@app.on_message(filter.command("m_free"))
+@app.on_message(filters.command("m_free"))
 async def _m_free(client,message:types.Message):
     if globals.progress_s != "free" and "error" in globals.progress_s and globals.run == 0:
         globals.progress_s = "free"
