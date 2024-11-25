@@ -1,5 +1,5 @@
 import os, time, asyncio
-from pyrogram import Client as app
+from pyrogram import Client
 from pyrogram import filters, types
 from config import Config
 from Func.reply_text import Text
@@ -11,8 +11,8 @@ from plugins.dl_up_1 import upload_from_url
 from threading import Thread
 import globals
 
-def run_upload_t(app, chat_id, video_url, n_caption):
-    asyncio.run(upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption))
+async def run_upload_t(app, chat_id, video_url, n_caption):
+    await upload_from_url(app, chat_id=int(chat_id), url=video_url, n_caption=n_caption)
 
 def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
