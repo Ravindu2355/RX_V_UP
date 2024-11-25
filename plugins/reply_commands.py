@@ -1,5 +1,6 @@
 import os, time, asyncio
 from pyrogram import Client as app
+from bot import app as preapp
 from pyrogram import filters, types
 from config import Config
 from Func.reply_text import Text
@@ -33,13 +34,13 @@ def process_tasks():
                                         add_header(hk,hv)
                             if "cookie" in setting:
                                 w_cookies(setting["cookie"])
-                    upload_thread = Thread(target=run_upload_t, args=(app, chat_id, url, None))
+                    upload_thread = Thread(target=run_upload_t, args=(preapp, chat_id, url, None))
                     upload_thread.start()
                 else:
                     globals.run = 0
                     del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
                     print(f"Completed tasks for chat_id {chat_id}")
-                    asyncio.run(app.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
+                    asyncio.run_coroutine_threadsafe(preapp.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
 
 @app.on_message(filters.private & filters.command("start"))
 async def _start(client,message:types.Message):
