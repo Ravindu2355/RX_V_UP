@@ -55,6 +55,7 @@ def process_tasks():
                                         add_header(hk,hv)
                             if "cookie" in setting:
                                 w_cookies(setting["cookie"])
+                    app.start()
                     upload_thread = Thread(target=run_upload_t, args=(app, chat_id, url, None))
                     upload_thread.start()
                 else:
