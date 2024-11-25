@@ -1,5 +1,5 @@
 import os, time, asyncio
-from pyrogram import Client
+from pyrogram import Client as app
 from pyrogram import filters, types
 from config import Config
 from Func.reply_text import Text
