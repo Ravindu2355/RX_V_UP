@@ -39,7 +39,7 @@ def run_upload_t(app, chat_id, video_url, n_caption):
 def process_tasks():
     """Monitors the tasks dictionary and processes tasks when available."""
     while True:
-        if app.is_connected not True:
+        if not app.is_connected:
             await app.start()
         if globals.tasks and globals.run == 0:  # Check if the tasks dictionary is not empty
             for chat_id, urls in list(globals.tasks.items()):
