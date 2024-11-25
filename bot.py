@@ -103,10 +103,11 @@ def upload_video():
 
 
 def run_flask():
-    flask_app.run(host='0.0.0.0', port=5000)
+    flask_app.run(host='0.0.0.0', port=5001)
 
 flask_thread = Thread(target=run_flask)
 flask_thread.start()
 
 if __name__ == "__main__":
-    app.run()
+    #app.run()
+    pass
