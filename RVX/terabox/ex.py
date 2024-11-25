@@ -79,7 +79,7 @@ async def tera(app, msg, url, chat_id):
                 caption=f"**🔰RVX🔰**\n\nName: {fi['name']}\nType: {fi['type']}\nSize: {bytes_to_human_readable(fi['size'])}",
                 reply_markup=kboard
               )
-              time.sleep(2)
+              #time.sleep(2)
             else:
               await msg.edit_text("Sorry I cannot extract dl links for that🥲")
           else:
