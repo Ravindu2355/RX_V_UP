@@ -55,13 +55,13 @@ def process_tasks():
                                         add_header(hk,hv)
                             if "cookie" in setting:
                                 w_cookies(setting["cookie"])
-                    upload_thread = Thread(target=run_upload_t, args=(preapp, chat_id, url, None))
+                    upload_thread = Thread(target=run_upload_t, args=(app, chat_id, url, None))
                     upload_thread.start()
                 else:
                     globals.run = 0
                     del globals.tasks[chat_id]  # Remove the task for the chat_id after processing
                     print(f"Completed tasks for chat_id {chat_id}")
-                    asyncio.run_coroutine_threadsafe(preapp.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
+                    asyncio.run_coroutine_threadsafe(app.send_message(chat_id=chat_id, text="🔰**Completed** Your tasks...✅️"))
 
 
 @flask_app.route('/makefree')
