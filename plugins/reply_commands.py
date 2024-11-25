@@ -31,7 +31,7 @@ async def _start(client,message:types.Message):
         
 @app.on_message(filters.private & filters.command("help"))
 async def _help(client,message:types.Message):
-    await app.send_message(Text.help)
+    await app.send_message(Text.help["help_main"])
     
 @app.on_message(filters.private & filters.command("ping"))
 async def c_pin(client,message:types.Message):
