@@ -8,6 +8,7 @@ from Func.display_progress import progress_for_pyrogram, humanbytes, TimeFormatt
 from Func.cookie import r_cookies, w_cookies, clear_cookies
 from Func.headers import load_headers
 from Func.simple_func import delete_file, get_file_name_from_response, intt
+from Func.reply_text import Text
 import globals
 from config import Config
 
@@ -17,7 +18,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
     if reply_msg is None:
         reply_msg = await app.send_message(chat_id=chat_id,text="Processing!....")
     else:
-        await reply_msg.edit_text("🔰Processing....!🔰")
+        await reply_msg.edit_text("**🔰RVX🔰**\n\nProcessing....!🛠")
     if not app:
         await reply_msg.reply(f"Er:No app Arg!")
     if not chat_id:
@@ -28,11 +29,11 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
     globals.run = 1
     try:
         if len(url) < 2:
-            await reply_msg.edit_text("Please provide a URL!")
+            await reply_msg.edit_text("😒Please provide a URL!🥲")
             globals.progress_s="free"
             globals.run = 0
             return
-        await reply_msg.edit_text("Starting download...")
+        await reply_msg.edit_text("**🔰RVX🔰**\n\nStarting download...")
         globals.progress_s="Download starting...."
         cookies = r_cookies()
         headers = load_headers()
@@ -42,7 +43,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
             response = requests.get(url, headers=headers, stream=True)
         total_size = int(response.headers.get('content-length', 0))  # Get the total file size
         if total_size >= sizelimit:
-            await reply_msg.edit_text("That file was bigger than telegram size limitations for me🥲")
+            await reply_msg.edit_text("💥That file was bigger🫠 than telegram size limitations for me🥲(2GB)")
             globals.progress_s = "File was bigger than 2GB"
             globals.run = 0
             return
@@ -55,21 +56,21 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
             fl_list = filename.split(".")
             f_ext = fl_list.pop()
             filename_s = ".".join(fl_list)
-        m_caption = f'Uploaded: {filename_s}\n file-extention: {f_ext}'
+        m_caption = f'**🔰Uploaded: {filename_s}🔗🚀\nFile-extention: {f_ext}🔑**'
         if n_name:
             try:
               n_ext=n_name.split(".").pop()
               if n_ext:
                  f_ext=n_ext
               else:
-                 await reply_msg.edit_text("You did'nt provide a file extention in new filename so i used my defalt as `.mp4`")
+                 await reply_msg.edit_text("🔰You did'nt provide a file extention in new filename🤕 so i used my defalt as `.mp4`😑")
                  f_ext="mp4"
                  n_name=n_name+".mp4"
             except:
-                await reply_msg.edit_text("You did'nt provide the name correctly for rename so not renamed🙂\n\n use /help for know about it...")
+                await reply_msg.edit_text("🔰You did'nt provide the name correctly🤕 for rename so not renamed🙂\n\n use /help for know about it...")
                 pass
             filename=n_name
-            m_caption=f'Uploaded {filename_s} and renamed to {n_name}\n file-extention: {f_ext}'
+            m_caption=f'**🔰Uploaded {filename_s}🔗🚀\n\nRenamed {filename_s}🪚 to {n_name}🛠\nFile-extention: {f_ext}🔑**'
         if n_caption is not None:
             m_caption = n_caption
         downloaded_size = 0
@@ -105,7 +106,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
                        if nn_s != tr_s:  #avoiding same message sending err......
                            tr_s = nn_s
                            await reply_msg.edit_text(nn_s)
-        await reply_msg.edit_text(f"Download complete. Generating thumbnail...\nfilename:{filename}")
+        await reply_msg.edit_text(f"**🔰RVX🔰**\n\n🔰Download completed.✅️\n🔰Generating🛠 thumbnail...📸\nFor {filename}🚀")
         globals.progress_s="Download complete. Generating thumbnail..."
         thumb_path = Config.DEF_THUMB_NAIL_VID_S
         if thumb_path is None or thumb_path == "":
@@ -116,19 +117,17 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
               frame = video.get_frame(3.0)
               img = Image.fromarray(frame)
               img.save(thumb_path, "JPEG")
-          await reply_msg.edit_text(f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram...")
+          await reply_msg.edit_text(f"**🔰RVX🔰**\n\n🔰Thumbnail generated.✅️\n🔰Trying to upload📤 it to Telegram...🚀")
           globals.progress_s=f"Thumbnail generated.\nduration detected as {duration} Uploading to Telegram..."
         start_time=time.time()
         fid = None
         if not chat_id:
-            await reply_msg.reply(f"Send Er:No chat_id {chat_id}")
+            await reply_msg.reply(f"🤕Send Er:No chat_id {chat_id}")
         if not filename:
-            await reply_msg.reply(f"Send Er:No file {filename}")
+            await reply_msg.reply(f"🤕Send Er:No file {filename}")
         #await reply_msg.reply(f"Download complete. Generating thumbnail...\nchat_id:{chat_id} filename:{filename}")
         if s_type == "video":
             s_v = await reply_msg.reply_video(
-            #s_v = await app.send_video(
-               #chat_id = int(chat_id),
                video = filename,
                duration=duration,
                caption=m_caption,
@@ -140,8 +139,6 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
             fid=s_v.video.file_id
         else:
             s_v = await reply_msg.reply_document(
-            #s_v =  await app.send_document(
-               #chat_id = int(chat_id),
                document = filename,
                caption=m_caption,
                progress=progress_for_pyrogram,
@@ -164,13 +161,13 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
                     await app.send_video(
                      chat_id=int(Config.M_CHAT),
                      video=fid,
-                     caption=f"**Uploaded via RvXBot**"
+                     caption=f"**Uploaded via RvXBot**\nBy: [{chat_id}](tg://user?id={chat_id})"
                    )
                 else:
                    await app.send_video(
                      chat_id=int(Config.M_CHAT),
                      document=fid,
-                     caption=f"**Uploaded via RvXBot**"
+                     caption=f"**Uploaded via RvXBot**\nBy: [{chat_id}](tg://user?id={chat_id})"
                    )
             else:
                 print("cannot find fid")
@@ -185,7 +182,7 @@ async def upload_from_url(app:Client, chat_id, url: str, n_name=None, n_caption=
 
     except Exception as e:
         await reply_msg.edit_text(f"An error occurred: {str(e)}\n\n**From RVX Uper1 system**")
-        globals.progress_s=f"An error occurred: {str(e)} uper1"
+        globals.progress_s=f"🤯An error occurred: {str(e)} uper1"
         print(e)
         globals.run = 0
         #delete_file(filename) #deleteing files if they downloaded...
