@@ -105,7 +105,7 @@ async def _p_tasks(client,message:types.Message):
 async def _len_tasks(client,message:types.Message):
     if str(message.chat.id) in Config.AuthU:
         chat_id=message.chat.id
-        ct=await get_tasks_count(chat_id)
+        ct=get_tasks_count(chat_id)
         await message.reply(f"🔰Your reiming task count is {ct}...🚀")
     else:
         await message.reply("You are not my auther!🫠")
@@ -133,8 +133,8 @@ async def _r_0(client, msg:types.Message):
 @app.on_message(filters.command("t_task"))
 async def _task_run_c(client, msg:types.Message):
     if str(msg.chat.id) in Config.AuthU:
-       await add_task(str(msg.chat.id),"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
-       await msg.reply("Example Task Add to the task list")
+       st=add_task(str(msg.chat.id),"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+       await msg.reply(f"Example Task Add to the task list\n{st}")
     else:
        await msg.reply("👿You are not my auther for that🤬")
      
